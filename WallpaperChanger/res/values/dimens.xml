@@ -1,0 +1,10 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="wallpaperItemIconSize">32dp</dimen>
+    <dimen name="wallpaperThumbnailWidth">106.5dp</dimen>
+    <dimen name="wallpaperThumbnailHeight">94.5dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+</resources>

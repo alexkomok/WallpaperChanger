@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <CheckBox
+        android:id="@+id/select_all"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onCheckboxClicked"
+        android:text="@string/select_all"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/testbutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/submit" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/testbutton"
+        android:layout_below="@+id/select_all"
+        android:choiceMode="multipleChoice" />
+
+</RelativeLayout>
