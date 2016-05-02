@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.mytestlist.R;
+import com.komok.wallpaperchanger.R;
 
 import android.app.ListActivity;
 import android.app.WallpaperInfo;
@@ -64,8 +64,8 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 			message = getString(R.string.select_one);
 		}
 		
-		if(WallpaperChangerHelper.ERROR.equals(error)){
-			Toast.makeText(this, getString(R.string.error_update_list), Toast.LENGTH_LONG).show();
+		if(error != null){
+			Toast.makeText(this, error, Toast.LENGTH_LONG).show();
 		}
 
 	}

@@ -2,7 +2,7 @@ package com.komok.wallpaperchanger;
 
 import java.util.List;
 
-import com.example.mytestlist.R;
+import com.komok.wallpaperchanger.R;
 
 import android.app.WallpaperInfo;
 import android.content.ComponentName;

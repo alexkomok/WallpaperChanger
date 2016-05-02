@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.mytestlist.R;
+import com.komok.wallpaperchanger.R;
 
 public class LiveWallpaperResultActivity extends Activity implements OnClickListener {
 	String day;

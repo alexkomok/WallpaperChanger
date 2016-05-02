@@ -23,11 +23,13 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 
 	Method method;
 	Object objIWallpaperManager;
+	String mError;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+		mError = getString(R.string.error_update_list);
 
 		if (Build.VERSION.SDK_INT <= 15) {
 
@@ -96,8 +98,10 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 				// }
 			} catch (IllegalAccessException e) {
 				Log.e(TAG, "Failed to set wallpaper: " + e);
+				mError = "Failed to set wallpaper: install as root in /system/app";
 			} catch (InvocationTargetException e) {
 				Log.e(TAG, "Failed to set wallpaper: " + e);
+				mError = "Failed to set wallpaper: " + e.getMessage();
 			}
 		}
 
@@ -108,7 +112,7 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 			// Create a bundle object
 			Bundle b = new Bundle();
 			b.putString(WallpaperChangerHelper.DAY, getDay().name());
-			b.putString(WallpaperChangerHelper.ERROR, WallpaperChangerHelper.ERROR);
+			b.putString(WallpaperChangerHelper.ERROR, mError);
 
 			// Add the bundle to the intent.
 			intent.putExtras(b);
