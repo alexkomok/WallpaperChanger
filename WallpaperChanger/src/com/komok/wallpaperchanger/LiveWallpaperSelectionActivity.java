@@ -66,6 +66,8 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 		
 		if(WallpaperChangerHelper.ERROR.equals(error)){
 			Toast.makeText(this, getString(R.string.error_update_list), Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(this, error, Toast.LENGTH_LONG).show();
 		}
 
 	}
