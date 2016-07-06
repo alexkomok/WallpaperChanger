@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,15 +24,15 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 
 	Method method;
 	Object objIWallpaperManager;
-	String mError;
+	boolean isPermissionGranted;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-		mError = getString(R.string.error_update_list);
+		isPermissionGranted = checkSetWallpaperComponentPermission();
 
-		if (Build.VERSION.SDK_INT <= 15) {
+		if (isPermissionGranted) {
 
 			WallpaperManager manager = WallpaperManager.getInstance(this);
 
@@ -55,6 +56,13 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 		}
 
 	}
+	
+	private boolean checkSetWallpaperComponentPermission()
+	{
+	    String permission = "android.permission.SET_WALLPAPER_COMPONENT";
+	    int res = this.checkCallingOrSelfPermission(permission);
+	    return (res == PackageManager.PERMISSION_GRANTED);            
+	}
 
 	@Override
 	protected void onStart() {
@@ -63,8 +71,9 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 		LiveWallpaper wallpaper = getLiveWallpaper();
 		Intent intent = new Intent();
 		boolean isSuccess = false;
+		String error = WallpaperChangerHelper.ERROR;
 
-		if (Build.VERSION.SDK_INT > 15) {
+		if (!isPermissionGranted && Build.VERSION.SDK_INT > 15) {
 
 			intent.setAction(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
 			String packageName = wallpaper.getPackageName();
@@ -72,7 +81,7 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 			intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(packageName, className));
 			isSuccess = true;
 			this.startActivityForResult(intent, 0);
-		} else {
+		} else if (isPermissionGranted) {
 			try {
 				intent = new Intent(WallpaperService.SERVICE_INTERFACE);
 
@@ -98,11 +107,11 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 				// }
 			} catch (IllegalAccessException e) {
 				Log.e(TAG, "Failed to set wallpaper: " + e);
-				mError = "Failed to set wallpaper: install as root in /system/app";
 			} catch (InvocationTargetException e) {
 				Log.e(TAG, "Failed to set wallpaper: " + e);
-				mError = "Failed to set wallpaper: " + e.getMessage();
 			}
+		} else {
+			error = getString(R.string.no_permission);
 		}
 
 		if (!isSuccess) {
@@ -112,7 +121,7 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 			// Create a bundle object
 			Bundle b = new Bundle();
 			b.putString(WallpaperChangerHelper.DAY, getDay().name());
-			b.putString(WallpaperChangerHelper.ERROR, mError);
+			b.putString(WallpaperChangerHelper.ERROR, error);
 
 			// Add the bundle to the intent.
 			intent.putExtras(b);

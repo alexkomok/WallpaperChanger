@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.komok.wallpaperchanger.R;
-
 import android.app.WallpaperInfo;
 import android.content.Context;
 import android.content.Intent;
