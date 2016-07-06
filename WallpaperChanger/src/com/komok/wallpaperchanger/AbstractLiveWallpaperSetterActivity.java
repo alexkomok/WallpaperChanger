@@ -3,8 +3,6 @@ package com.komok.wallpaperchanger;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import com.example.mytestlist.R;
-
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ComponentName;

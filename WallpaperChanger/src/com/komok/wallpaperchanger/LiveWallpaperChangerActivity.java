@@ -1,7 +1,5 @@
 package com.komok.wallpaperchanger;
 
-import com.example.mytestlist.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

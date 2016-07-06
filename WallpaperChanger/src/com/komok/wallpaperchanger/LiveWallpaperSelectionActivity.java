@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.mytestlist.R;
-
 import android.app.ListActivity;
 import android.app.WallpaperInfo;
 import android.content.Intent;
