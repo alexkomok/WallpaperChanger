@@ -11,6 +11,12 @@
         android:text="@string/random" />
 
     <Button
+        android:id="@+id/list_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/list" />    
+    
+    <Button
         android:id="@+id/monday_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

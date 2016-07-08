@@ -1,7 +1,7 @@
 package com.komok.wallpaperchanger;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +21,10 @@ public class WallpaperChangerHelper {
 	private static final String settings = "wallpaperChangerSettings";
 	public static final String DAY = "day";
 	public static final String ERROR = "error";
+	public static final String positionKey = "positionKey";
 
 	enum Weekday {
-		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Random
+		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Random, List
 	};
 
 	public static boolean isLiveWallpaperValid(LiveWallpaper liveWallpaper, Activity activity) {
@@ -41,7 +42,7 @@ public class WallpaperChangerHelper {
 	}
 
 	public static Map<String, String> getAvailableWallpapersMap(Activity activity) {
-		Map<String, String> availableWallpapersMap = new HashMap<String, String>();
+		Map<String, String> availableWallpapersMap = new LinkedHashMap<String, String>();
 		PackageManager packageManager = activity.getPackageManager();
 		List<ResolveInfo> availableWallpapersList = packageManager.queryIntentServices(new Intent(WallpaperService.SERVICE_INTERFACE),
 				PackageManager.GET_META_DATA);
@@ -53,7 +54,7 @@ public class WallpaperChangerHelper {
 	}
 
 	public static void saveLiveWallpaper(LiveWallpaper liveWallpaper, Context context, Weekday day) {
-		Map<String, String> inputMap = new HashMap<String, String>();
+		Map<String, String> inputMap = new LinkedHashMap<String, String>();
 		inputMap.put(liveWallpaper.getClassName(), liveWallpaper.getPackageName());
 		saveMap(inputMap, context, day.name());
 	}
@@ -69,6 +70,23 @@ public class WallpaperChangerHelper {
 		return new LiveWallpaper(className, packageName);
 
 	}
+	
+	public static void saveListPosition(int position, Context context) {
+		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
+		if (pSharedPref != null) {
+			Editor editor = pSharedPref.edit();
+			editor.remove(positionKey).commit();
+			editor.putInt(positionKey, position).commit();
+		}
+	}
+	
+	public static int loadListPosition(Context context) {
+		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
+		if (pSharedPref != null) {
+			return pSharedPref.getInt(positionKey, 0);
+		} else 
+			return 0;
+	}
 
 	public static void saveMap(Map<String, String> inputMap, Context context, String randomMap) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
@@ -83,7 +101,7 @@ public class WallpaperChangerHelper {
 	}
 
 	public static Map<String, String> loadMap(Context context, String mapName) {
-		Map<String, String> outputMap = new HashMap<String, String>();
+		Map<String, String> outputMap = new LinkedHashMap<String, String>();
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		try {
 			if (pSharedPref != null) {

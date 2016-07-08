@@ -6,9 +6,9 @@ import android.graphics.drawable.Drawable;
 
 public class WallpaperTile {
 
-	Drawable mThumbnail;
-	WallpaperInfo mWallpaperInfo;
-	Intent mIntent;
+	public Drawable mThumbnail;
+	public WallpaperInfo mWallpaperInfo;
+	public Intent mIntent;
 
 	public WallpaperTile(Drawable thumbnail, WallpaperInfo info, Intent intent) {
 		mThumbnail = thumbnail;

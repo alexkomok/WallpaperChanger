@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="main_activity">Create Wallpaper</string>
+	<string name="main_activity">Create Wallpaper Changer</string>
     <string name="error_activity">Error</string>
     <string name="app_name">Wallpaper Changer</string>
     <string name="result_activity">Selected Wallpapers</string>
@@ -9,6 +9,7 @@
 	<string name="error_title">Error:</string>
 	<string name="set_rendom_wallpaper">Set rendom Wallpaper from the list</string>
 	<string name="set_wallpaper">Set Wallpaper</string>
+	<string name="list">List</string>
 	<string name="random">Random</string>
 	<string name="monday">Monday</string>
 	<string name="tuesday">Tuesday</string>

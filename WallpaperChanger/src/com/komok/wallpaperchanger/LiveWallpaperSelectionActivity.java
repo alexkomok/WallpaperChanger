@@ -1,7 +1,7 @@
 package com.komok.wallpaperchanger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +41,6 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 
 		listView.setAdapter(mAdapter);
 		button.setOnClickListener(this);
-
 	}
 
 	public void onStart() {
@@ -52,7 +51,7 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 		checkBox.setChecked(false);
 		selectedWallpapersMap = WallpaperChangerHelper.loadMap(this, day);
 
-		if (WallpaperChangerHelper.Weekday.Random.name().equals(day)) {
+		if (WallpaperChangerHelper.Weekday.Random.name().equals(day) || WallpaperChangerHelper.Weekday.List.name().equals(day)) {
 			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 			checkBox.setVisibility(View.VISIBLE);
 			message = getString(R.string.select_one_or_more);
@@ -64,9 +63,11 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 		
 		if(WallpaperChangerHelper.ERROR.equals(error)){
 			Toast.makeText(this, getString(R.string.error_update_list), Toast.LENGTH_LONG).show();
-		} else {
+		} else if (error != null){
 			Toast.makeText(this, error, Toast.LENGTH_LONG).show();
 		}
+		
+		setItemChecked();
 
 	}
 
@@ -76,6 +77,8 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 			WallpaperTile lwp = (WallpaperTile) listView.getItemAtPosition(i);
 			if (selectedWallpapersMap.containsKey(lwp.mWallpaperInfo.getServiceName())) {
 				listView.setItemChecked(i, true);
+			} else {
+				listView.setItemChecked(i, false);
 			}
 		}
 	}
@@ -88,24 +91,26 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 
 	public void onClick(View v) {
 		SparseBooleanArray checked = listView.getCheckedItemPositions();
-		selectedWallpapersMap = new HashMap<String, String>();
+		selectedWallpapersMap = new LinkedHashMap<String, String>();
 		selectedTilesList = new ArrayList<WallpaperTile>();
 
-		if (checked.size() == 0) {
-			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-			return;
-		}
-
+		boolean isAnyChecked = false;
 		for (int i = 0; i < checked.size(); i++) {
 			// Item position in adapter
 			int position = checked.keyAt(i);
+			
 			if (checked.valueAt(i)) {
-				
+				isAnyChecked = true;
 				selectedTilesList.add(mAdapter.getItem(position));
 				
 				WallpaperInfo info = mAdapter.getItem(position).mWallpaperInfo;
 				selectedWallpapersMap.put(info.getServiceName(), info.getPackageName());
 			}
+		}
+		
+		if(!isAnyChecked) {
+			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+			return;
 		}
 
 		WallpaperChangerHelper.saveMap(selectedWallpapersMap, this, day);

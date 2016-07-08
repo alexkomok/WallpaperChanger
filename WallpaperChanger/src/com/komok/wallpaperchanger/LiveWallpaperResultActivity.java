@@ -1,18 +1,27 @@
 package com.komok.wallpaperchanger;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import android.app.Activity;
+import android.app.WallpaperInfo;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 
-public class LiveWallpaperResultActivity extends Activity implements OnClickListener {
+import com.komok.itemtouchhelper.helper.OnStartDragListener;
+import com.komok.itemtouchhelper.helper.SimpleItemTouchHelperCallback;
+
+public class LiveWallpaperResultActivity extends Activity implements OnClickListener, OnStartDragListener {
 	String day;
 	Button set_wallpaper;
-	ListView listView;
-	LiveWallpaperSelectedListAdapter mAdapter;
+	RecyclerView listView;
+	private ItemTouchHelper mItemTouchHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +40,30 @@ public class LiveWallpaperResultActivity extends Activity implements OnClickList
 
 		mButton.setOnClickListener(this);
 
-		listView = (ListView) findViewById(R.id.outputList);
-		mAdapter = new LiveWallpaperSelectedListAdapter(this, LiveWallpaperSelectionActivity.selectedTilesList);
-
-		listView.setAdapter(mAdapter);
-		listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+		listView = (RecyclerView) findViewById(R.id.outputList);
+		LiveWallpaperResultListAdapter adapter = new LiveWallpaperResultListAdapter(this, this, LiveWallpaperSelectionActivity.selectedTilesList);
+		
+		listView.setHasFixedSize(true);
+		listView.setAdapter(adapter);
+		listView.setLayoutManager(new LinearLayoutManager(this));
+		
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(listView);
 	}
 
 	@Override
 	public void onClick(View v) {
+		
+		Map<String, String> selectedWallpapersMap = new LinkedHashMap<String, String>();
+		
+		for(WallpaperTile wallpaperTile : LiveWallpaperSelectionActivity.selectedTilesList){
+			WallpaperInfo info = wallpaperTile.mWallpaperInfo;
+			selectedWallpapersMap.put(info.getServiceName(), info.getPackageName());
+		}
 
+		WallpaperChangerHelper.saveMap(selectedWallpapersMap, this, day);
+		
 		if (WallpaperChangerHelper.Weekday.Random.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperRandomActivity.class));
 		} else if (WallpaperChangerHelper.Weekday.Monday.name().equals(day)) {
@@ -57,8 +80,15 @@ public class LiveWallpaperResultActivity extends Activity implements OnClickList
 			startActivity(new Intent(this, LiveWallpaperSaturdayActivity.class));
 		} else if (WallpaperChangerHelper.Weekday.Sunday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperSundayActivity.class));
+		} else if (WallpaperChangerHelper.Weekday.List.name().equals(day)) {
+			startActivity(new Intent(this, LiveWallpaperListActivity.class));
 		}
 
 	}
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
+    }
 
 }

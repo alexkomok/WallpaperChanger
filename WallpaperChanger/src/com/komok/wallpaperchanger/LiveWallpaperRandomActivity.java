@@ -13,12 +13,16 @@ public class LiveWallpaperRandomActivity extends AbstractLiveWallpaperSetterActi
 	protected LiveWallpaper getLiveWallpaper() {
 		Map<String, String> selectedWallpapersMap = WallpaperChangerHelper.loadMap(this, getDay().name());
 
-		Random random = new Random();
-		List<String> keys = new ArrayList<String>(selectedWallpapersMap.keySet());
-		String className = keys.get(random.nextInt(keys.size()));
-		String packageName = selectedWallpapersMap.get(className);
+		if (selectedWallpapersMap.size() > 0) {
+			Random random = new Random();
+			List<String> keys = new ArrayList<String>(selectedWallpapersMap.keySet());
+			String className = keys.get(random.nextInt(keys.size()));
+			String packageName = selectedWallpapersMap.get(className);
 
-		return new LiveWallpaper(className, packageName);
+			return new LiveWallpaper(className, packageName);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

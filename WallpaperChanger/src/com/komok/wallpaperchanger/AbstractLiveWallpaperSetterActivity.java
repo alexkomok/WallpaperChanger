@@ -69,6 +69,12 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 		super.onStart();
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 		LiveWallpaper wallpaper = getLiveWallpaper();
+		
+		if(wallpaper == null){
+			ExceptionHandler.caughtException(new Exception(getString(R.string.error_update_list) + " for: " + getDay().name()), this);
+			return;
+		}
+		
 		Intent intent = new Intent();
 		boolean isSuccess = false;
 		String error = WallpaperChangerHelper.ERROR;

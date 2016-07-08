@@ -10,6 +10,7 @@ import android.widget.Button;
 public class LiveWallpaperChangerActivity extends Activity implements OnClickListener{
 	
 	Button random_button;
+	Button list_button;
 	Button monday_button;
 	Button tuesday_button;
 	Button wednesday_button;
@@ -27,6 +28,7 @@ public class LiveWallpaperChangerActivity extends Activity implements OnClickLis
 		findViewsById();
 
 		random_button.setOnClickListener(this);
+		list_button.setOnClickListener(this);
 		monday_button.setOnClickListener(this);
 		tuesday_button.setOnClickListener(this);
 		wednesday_button.setOnClickListener(this);
@@ -39,6 +41,7 @@ public class LiveWallpaperChangerActivity extends Activity implements OnClickLis
     
     private void findViewsById() {
         random_button = (Button) findViewById(R.id.random_button);
+        list_button = (Button) findViewById(R.id.list_button);
         monday_button = (Button) findViewById(R.id.monday_button);
         tuesday_button = (Button) findViewById(R.id.tuesday_button);
         wednesday_button = (Button) findViewById(R.id.wednesday_button);
@@ -79,6 +82,9 @@ public class LiveWallpaperChangerActivity extends Activity implements OnClickLis
 	      case R.id.sunday_button:
 	    	  day = WallpaperChangerHelper.Weekday.Sunday;
 	        break;
+	      case R.id.list_button:
+	    	  day = WallpaperChangerHelper.Weekday.List;
+	        break;	        
 	      }
 		
 		
