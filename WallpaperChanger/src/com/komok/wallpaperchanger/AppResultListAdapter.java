@@ -13,9 +13,9 @@ import com.komok.itemtouchhelper.helper.AbstractRecyclerListAdapter;
 import com.komok.itemtouchhelper.helper.ItemTouchHelperAdapter;
 import com.komok.itemtouchhelper.helper.OnStartDragListener;
 
-public class LiveWallpaperResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
+public class AppResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
 
-	public LiveWallpaperResultListAdapter(Context context, OnStartDragListener dragStartListener, List<Tile> selectedTilesList) {
+	public AppResultListAdapter(Context context, OnStartDragListener dragStartListener, List<Tile> selectedTilesList) {
 		super(context, dragStartListener, selectedTilesList);
 	}
 
@@ -27,14 +27,10 @@ public class LiveWallpaperResultListAdapter extends AbstractRecyclerListAdapter<
 		mViewOnClickListener = new OnClickListener() {
 			public void onClick(View v) {
 
-/*				WallpaperInfo wi = tile.mWallpaperInfo;
-				if (wi.getSettingsActivity() != null) {
+				if (tile.mIntent != null) {
+					v.getContext().startActivity(tile.mIntent);
 
-					Intent intent = new Intent();
-					intent.setComponent(new ComponentName(tile.mWallpaperInfo.getPackageName(), wi.getSettingsActivity()));
-					v.getContext().startActivity(intent);
-
-				} else*/
+				} else
 
 					Toast.makeText(v.getContext(), v.getContext().getString(R.string.no_settings), Toast.LENGTH_LONG).show();
 			}

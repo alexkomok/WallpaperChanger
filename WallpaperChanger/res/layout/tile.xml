@@ -27,13 +27,6 @@
         android:layout_marginLeft="36dip"
         android:background="@android:color/black"
         android:scaleType="centerCrop" />
-    <ImageView
-        android:id="@+id/wallpaper_icon"
-        android:layout_width="@dimen/wallpaperItemIconSize"
-        android:layout_height="@dimen/wallpaperItemIconSize"
-        android:layout_gravity="center"
-        android:layout_marginLeft="36dip"
-        android:visibility="gone" />
 
     <TextView
         android:id="@+id/wallpaper_item_label"

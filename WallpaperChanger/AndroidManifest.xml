@@ -27,6 +27,7 @@
             android:label="@string/result_activity" >
         </activity>
         <activity android:name="com.komok.wallpaperchanger.LiveWallpaperSelectionActivity" />
+        <activity android:name="com.komok.wallpaperchanger.AppSelectionActivity" />
         <activity
             android:name="com.komok.wallpaperchanger.LiveWallpaperRandomActivity"
             android:noHistory="true" >

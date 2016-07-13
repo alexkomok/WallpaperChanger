@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.komok.wallpaperchanger.WallpaperChangerHelper.Weekday;
+import com.komok.wallpaperchanger.BaseHelper.Weekday;
 
 public class LiveWallpaperRandomActivity extends AbstractLiveWallpaperSetterActivity {
 
 	@Override
 	protected LiveWallpaper getLiveWallpaper() {
-		Map<String, String> selectedWallpapersMap = WallpaperChangerHelper.loadMap(this, getDay().name());
+		Map<String, String> selectedWallpapersMap = BaseHelper.loadWallpapersMap(this, getDay().name());
 
 		if (selectedWallpapersMap.size() > 0) {
 			Random random = new Random();
@@ -27,7 +27,7 @@ public class LiveWallpaperRandomActivity extends AbstractLiveWallpaperSetterActi
 
 	@Override
 	protected Weekday getDay() {
-		return WallpaperChangerHelper.Weekday.Random;
+		return BaseHelper.Weekday.Random;
 	}
 
 }

@@ -16,14 +16,14 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class LiveWallpaperSelectionActivity extends ListActivity implements OnClickListener, IItemChecked {
+public class AppSelectionActivity extends ListActivity implements OnClickListener, IItemChecked {
 
 	Button button;
 	ListView listView;
 	CheckBox checkBox;
-	AbstractBaseAdapter<Tile> mAdapter;
+	AppListAdapter mAdapter;
 	String day;
-	Map<String, String> selectedWallpapersMap;
+	Map<String, String> selectedAppsMap;
 	String message;
 	String error;
 	static List<Tile> selectedTilesList;
@@ -36,7 +36,7 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 		setContentView(R.layout.activity_select);
 		findViewsById();
 
-		mAdapter = new LiveWallpaperListAdapter(this);
+		mAdapter = new AppListAdapter(this);
 
 		listView.setAdapter(mAdapter);
 		button.setOnClickListener(this);
@@ -48,7 +48,7 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 		day = b.getString(BaseHelper.DAY);
 		error = b.getString(BaseHelper.ERROR);
 		checkBox.setChecked(false);
-		selectedWallpapersMap = BaseHelper.loadWallpapersMap(this, day);
+		selectedAppsMap = BaseHelper.loadAppsMap(this, day);
 
 		if (BaseHelper.Weekday.Random.name().equals(day) || BaseHelper.Weekday.List.name().equals(day)) {
 			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -59,13 +59,13 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 			checkBox.setVisibility(View.GONE);
 			message = getString(R.string.select_one);
 		}
-		
-		if(BaseHelper.ERROR.equals(error)){
+
+		if (BaseHelper.ERROR.equals(error)) {
 			Toast.makeText(this, getString(R.string.error_update_list), Toast.LENGTH_LONG).show();
-		} else if (error != null){
+		} else if (error != null) {
 			Toast.makeText(this, error, Toast.LENGTH_LONG).show();
 		}
-		
+
 		setItemChecked();
 
 	}
@@ -74,7 +74,8 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 
 		for (int i = 0; i < listView.getAdapter().getCount(); i++) {
 			Tile tile = (Tile) listView.getItemAtPosition(i);
-			if (selectedWallpapersMap.containsKey(tile.mLabel)) {
+			String label = tile.mLabel;
+			if (selectedAppsMap.containsKey(label)) {
 				listView.setItemChecked(i, true);
 			} else {
 				listView.setItemChecked(i, false);
@@ -90,28 +91,34 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 
 	public void onClick(View v) {
 		SparseBooleanArray checked = listView.getCheckedItemPositions();
-		selectedWallpapersMap = new LinkedHashMap<String, String>();
+		selectedAppsMap = new LinkedHashMap<String, String>();
 		selectedTilesList = new ArrayList<Tile>();
 
 		boolean isAnyChecked = false;
 		for (int i = 0; i < checked.size(); i++) {
 			// Item position in adapter
 			int position = checked.keyAt(i);
-			
+
 			if (checked.valueAt(i)) {
 				isAnyChecked = true;
-				Tile wallpaperTile = (Tile) mAdapter.getItem(position);
-				selectedTilesList.add(wallpaperTile);
-				selectedWallpapersMap.put(wallpaperTile.mLabel, "");
+				Tile tile = (Tile) mAdapter.getItem(position);
+				selectedTilesList.add(tile);
+				String label = tile.mLabel;
+				try {
+					selectedAppsMap.put(label, "");
+				} catch (IllegalArgumentException e) {
+					Toast.makeText(this, "Duplicated name. Please, deselect: " + label, Toast.LENGTH_LONG).show();
+					return;
+				}
 			}
 		}
-		
-		if(!isAnyChecked) {
+
+		if (!isAnyChecked) {
 			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 			return;
 		}
 
-		BaseHelper.saveWallpapersMap(selectedWallpapersMap, this, day);
+		BaseHelper.saveAppsMap(selectedAppsMap, this, day);
 
 		Intent intent = new Intent(this, LiveWallpaperResultActivity.class);
 

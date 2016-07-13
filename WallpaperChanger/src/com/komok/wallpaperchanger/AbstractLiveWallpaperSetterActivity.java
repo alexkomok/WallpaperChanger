@@ -20,7 +20,7 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 
 	protected abstract LiveWallpaper getLiveWallpaper();
 
-	protected abstract WallpaperChangerHelper.Weekday getDay();
+	protected abstract BaseHelper.Weekday getDay();
 
 	Method method;
 	Object objIWallpaperManager;
@@ -77,7 +77,7 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 		
 		Intent intent = new Intent();
 		boolean isSuccess = false;
-		String error = WallpaperChangerHelper.ERROR;
+		String error = BaseHelper.ERROR;
 
 		if (!isPermissionGranted && Build.VERSION.SDK_INT > 15) {
 
@@ -126,8 +126,8 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 
 			// Create a bundle object
 			Bundle b = new Bundle();
-			b.putString(WallpaperChangerHelper.DAY, getDay().name());
-			b.putString(WallpaperChangerHelper.ERROR, error);
+			b.putString(BaseHelper.DAY, getDay().name());
+			b.putString(BaseHelper.ERROR, error);
 
 			// Add the bundle to the intent.
 			intent.putExtras(b);

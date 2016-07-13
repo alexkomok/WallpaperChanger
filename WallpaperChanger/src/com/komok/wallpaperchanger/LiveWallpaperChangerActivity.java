@@ -54,43 +54,44 @@ public class LiveWallpaperChangerActivity extends Activity implements OnClickLis
 	@Override
 	public void onClick(View v) {
 		
-		WallpaperChangerHelper.Weekday day = WallpaperChangerHelper.Weekday.Random;
+		BaseHelper.Weekday day = BaseHelper.Weekday.Random;
 		Intent intent = new Intent(this, LiveWallpaperSelectionActivity.class);
 		
 		switch (v.getId()) {
 	      case R.id.random_button:
-	    	  day = WallpaperChangerHelper.Weekday.Random;
+	    	  day = BaseHelper.Weekday.Random;
 	        break;
 	      case R.id.monday_button:
-	    	  day = WallpaperChangerHelper.Weekday.Monday;
+	    	  day = BaseHelper.Weekday.Monday;
 	        break;
 	      case R.id.tuesday_button:
-	    	  day = WallpaperChangerHelper.Weekday.Tuesday;
+	    	  day = BaseHelper.Weekday.Tuesday;
 	        break;
 	      case R.id.wednesday_button:
-	    	  day = WallpaperChangerHelper.Weekday.Wednesday;
+	    	  day = BaseHelper.Weekday.Wednesday;
 	        break;
 	      case R.id.thursday_button:
-	    	  day = WallpaperChangerHelper.Weekday.Thursday;
+	    	  day = BaseHelper.Weekday.Thursday;
 	        break;
 	      case R.id.friday_button:
-	    	  day = WallpaperChangerHelper.Weekday.Friday;
+	    	  day = BaseHelper.Weekday.Friday;
 	        break;
 	      case R.id.saturday_button:
-	    	  day = WallpaperChangerHelper.Weekday.Saturday;
+	    	  day = BaseHelper.Weekday.Saturday;
 	        break;
 	      case R.id.sunday_button:
-	    	  day = WallpaperChangerHelper.Weekday.Sunday;
+	    	  day = BaseHelper.Weekday.Sunday;
 	        break;
 	      case R.id.list_button:
-	    	  day = WallpaperChangerHelper.Weekday.List;
+	    	  day = BaseHelper.Weekday.List;
+	    	  intent = new Intent(this, AppSelectionActivity.class);
 	        break;	        
 	      }
 		
 		
         // Create a bundle object
         Bundle b = new Bundle();
-        b.putString(WallpaperChangerHelper.DAY, day.name());
+        b.putString(BaseHelper.DAY, day.name());
  
         // Add the bundle to the intent.
         intent.putExtras(b);

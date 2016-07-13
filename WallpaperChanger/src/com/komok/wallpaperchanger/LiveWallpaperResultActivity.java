@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.WallpaperInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,10 +28,10 @@ public class LiveWallpaperResultActivity extends Activity implements OnClickList
 		setContentView(R.layout.activity_result);
 
 		Bundle b = getIntent().getExtras();
-		day = b.getString(WallpaperChangerHelper.DAY);
+		day = b.getString(BaseHelper.DAY);
 
 		Button mButton = (Button) findViewById(R.id.set_wallpaper);
-		if (WallpaperChangerHelper.Weekday.Random.name().equals(day)) {
+		if (BaseHelper.Weekday.Random.name().equals(day)) {
 			mButton.setText(getResources().getString(R.string.set_rendom_wallpaper));
 		} else {
 			mButton.setText(getResources().getString(R.string.set_wallpaper));
@@ -41,7 +40,8 @@ public class LiveWallpaperResultActivity extends Activity implements OnClickList
 		mButton.setOnClickListener(this);
 
 		listView = (RecyclerView) findViewById(R.id.outputList);
-		LiveWallpaperResultListAdapter adapter = new LiveWallpaperResultListAdapter(this, this, LiveWallpaperSelectionActivity.selectedTilesList);
+		//LiveWallpaperResultListAdapter adapter = new LiveWallpaperResultListAdapter(this, this, LiveWallpaperSelectionActivity.selectedTilesList);
+		AppResultListAdapter adapter = new AppResultListAdapter(this, this, AppSelectionActivity.selectedTilesList);
 		
 		listView.setHasFixedSize(true);
 		listView.setAdapter(adapter);
@@ -57,30 +57,29 @@ public class LiveWallpaperResultActivity extends Activity implements OnClickList
 		
 		Map<String, String> selectedWallpapersMap = new LinkedHashMap<String, String>();
 		
-		for(WallpaperTile wallpaperTile : LiveWallpaperSelectionActivity.selectedTilesList){
-			WallpaperInfo info = wallpaperTile.mWallpaperInfo;
-			selectedWallpapersMap.put(info.getServiceName(), info.getPackageName());
+		for(Tile tile : LiveWallpaperSelectionActivity.selectedTilesList){
+			selectedWallpapersMap.put(tile.mLabel, "");
 		}
 
-		WallpaperChangerHelper.saveMap(selectedWallpapersMap, this, day);
+		BaseHelper.saveWallpapersMap(selectedWallpapersMap, this, day);
 		
-		if (WallpaperChangerHelper.Weekday.Random.name().equals(day)) {
+		if (BaseHelper.Weekday.Random.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperRandomActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.Monday.name().equals(day)) {
+		} else if (BaseHelper.Weekday.Monday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperMondayActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.Tuesday.name().equals(day)) {
+		} else if (BaseHelper.Weekday.Tuesday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperTuesdayActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.Wednesday.name().equals(day)) {
+		} else if (BaseHelper.Weekday.Wednesday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperWednesdayActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.Thursday.name().equals(day)) {
+		} else if (BaseHelper.Weekday.Thursday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperThursdayActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.Friday.name().equals(day)) {
+		} else if (BaseHelper.Weekday.Friday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperFridayActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.Saturday.name().equals(day)) {
+		} else if (BaseHelper.Weekday.Saturday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperSaturdayActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.Sunday.name().equals(day)) {
+		} else if (BaseHelper.Weekday.Sunday.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperSundayActivity.class));
-		} else if (WallpaperChangerHelper.Weekday.List.name().equals(day)) {
+		} else if (BaseHelper.Weekday.List.name().equals(day)) {
 			startActivity(new Intent(this, LiveWallpaperListActivity.class));
 		}
 
