@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 
-<com.komok.wallpaperchanger.CheckableRelativeLayout
+<com.komok.common.CheckableRelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -54,4 +54,4 @@
               android:background="@drawable/customcheckbox_background"
               android:button="@drawable/customcheckbox"
             />            
-</com.komok.wallpaperchanger.CheckableRelativeLayout>
+</com.komok.common.CheckableRelativeLayout>

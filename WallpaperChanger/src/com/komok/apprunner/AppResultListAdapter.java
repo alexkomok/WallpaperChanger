@@ -1,4 +1,4 @@
-package com.komok.wallpaperchanger;
+package com.komok.apprunner;
 
 import java.util.List;
 
@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.komok.itemtouchhelper.helper.AbstractRecyclerListAdapter;
-import com.komok.itemtouchhelper.helper.ItemTouchHelperAdapter;
-import com.komok.itemtouchhelper.helper.OnStartDragListener;
+import com.komok.common.Tile;
+import com.komok.itemtouchhelper.AbstractRecyclerListAdapter;
+import com.komok.itemtouchhelper.ItemTouchHelperAdapter;
+import com.komok.itemtouchhelper.OnStartDragListener;
+import com.komok.wallpaperchanger.R;
 
 public class AppResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
 

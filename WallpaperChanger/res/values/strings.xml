@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="main_activity">Create Wallpaper Changer</string>
-    <string name="error_activity">Error</string>
-    <string name="app_name">Wallpaper Changer</string>
+
+    <string name="app_name">Wallpaper Changer</string> 
+   	<string name="main_activity">Create Changer for:</string>
+
+   	<string name="changer_activity">Selected Wallpapers</string>
+   	<string name="selection_activity">Select Wallpapers</string>
     <string name="result_activity">Selected Wallpapers</string>
+    <string name="error_activity">Error</string>
+    
     <string name="submit">Next</string>
 	<string name="select_all">Select All</string>
 	<string name="error_title">Error:</string>
 	<string name="set_rendom_wallpaper">Set rendom Wallpaper from the list</string>
+	<string name="set_rendom_app">Run rendom App from the list</string>
 	<string name="set_wallpaper">Set Wallpaper</string>
+	<string name="set_app">Set App to run</string>
 	<string name="list">List</string>
 	<string name="random">Random</string>
 	<string name="monday">Monday</string>
@@ -24,4 +31,9 @@
 	<string name="no_settings">There are no settings for this live wallpaper</string>
 	<string name="no_permission">This app has no permission to set wallpaper</string>
 	<string name="wait">Please wait</string>
+	<string name="radio_all">All apps</string>
+	<string name="radio_sys">System apps</string>
+	<string name="radio_user">User apps</string>
+	<string name="main_apps">Applications</string>
+	<string name="main_wallpapers">Live Wallpapers</string>
 </resources>

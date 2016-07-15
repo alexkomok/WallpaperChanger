@@ -2,16 +2,19 @@ package com.komok.wallpaperchanger;
 
 import java.util.List;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.komok.itemtouchhelper.helper.AbstractRecyclerListAdapter;
-import com.komok.itemtouchhelper.helper.ItemTouchHelperAdapter;
-import com.komok.itemtouchhelper.helper.OnStartDragListener;
+import com.komok.common.Tile;
+import com.komok.itemtouchhelper.AbstractRecyclerListAdapter;
+import com.komok.itemtouchhelper.ItemTouchHelperAdapter;
+import com.komok.itemtouchhelper.OnStartDragListener;
 
 public class LiveWallpaperResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
 
@@ -27,14 +30,13 @@ public class LiveWallpaperResultListAdapter extends AbstractRecyclerListAdapter<
 		mViewOnClickListener = new OnClickListener() {
 			public void onClick(View v) {
 
-/*				WallpaperInfo wi = tile.mWallpaperInfo;
-				if (wi.getSettingsActivity() != null) {
+				if (tile.mLiveWallpaperSettingsActivity != null && tile.mIntent != null && tile.mIntent.getPackage() != null) {
 
 					Intent intent = new Intent();
-					intent.setComponent(new ComponentName(tile.mWallpaperInfo.getPackageName(), wi.getSettingsActivity()));
+					intent.setComponent(new ComponentName(tile.mIntent.getPackage(), tile.mLiveWallpaperSettingsActivity));
 					v.getContext().startActivity(intent);
 
-				} else*/
+				} else
 
 					Toast.makeText(v.getContext(), v.getContext().getString(R.string.no_settings), Toast.LENGTH_LONG).show();
 			}

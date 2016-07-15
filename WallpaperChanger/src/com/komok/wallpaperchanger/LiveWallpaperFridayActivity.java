@@ -1,12 +1,14 @@
 package com.komok.wallpaperchanger;
 
-import com.komok.wallpaperchanger.BaseHelper.Weekday;
+import com.komok.common.ApplicationHolder;
+import com.komok.common.BaseHelper;
+import com.komok.common.BaseHelper.Weekday;
 
 
 public class LiveWallpaperFridayActivity extends AbstractLiveWallpaperSetterActivity {
 
 	@Override
-	protected LiveWallpaper getLiveWallpaper() {
+	protected ApplicationHolder getLiveWallpaper() {
 		return  BaseHelper.loadLiveWallpaper(this, getDay());
 	}
 

@@ -1,4 +1,4 @@
-package com.komok.wallpaperchanger;
+package com.komok.apprunner;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -12,19 +12,18 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
 
-public class AppListAdapter extends AbstractBaseAdapter<Tile> implements ListAdapter {
+import com.komok.common.AbstractBaseAdapter;
+import com.komok.common.AbstractEnumerator;
+import com.komok.common.BaseHelper;
+import com.komok.common.Tile;
 
-	private final LayoutInflater mInflater;
+public class AppListAdapter extends AbstractBaseAdapter<Tile> {
+
 	private final PackageManager mPackageManager;
 
 	@SuppressWarnings("unchecked")
-	public AppListAdapter(Context context) {
+	public AppListAdapter(Context context, BaseHelper.Apps apps) {
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mPackageManager = context.getPackageManager();
 
@@ -33,15 +32,25 @@ public class AppListAdapter extends AbstractBaseAdapter<Tile> implements ListAda
 
 		List<ApplicationInfo> list = mPackageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 		List<ApplicationInfo> userAppList = new ArrayList<ApplicationInfo>();
+		List<ApplicationInfo> sysAppList = new ArrayList<ApplicationInfo>();
 
 		for (ApplicationInfo app : list) {
 			if (isUserApp(app)) {
 				userAppList.add(app);
+			} else {
+				sysAppList.add(app);
+			}
+		}
+
+		if (!BaseHelper.Apps.All.equals(apps)) {
+			if (BaseHelper.Apps.Sys.equals(apps)) {
+				list = sysAppList;
+			} else if (BaseHelper.Apps.User.equals(apps)) {
+				list = userAppList;
 			}
 		}
 
 		mTiles = new ArrayList<Tile>();
-
 		new ApplicationEnumerator(context, this).execute(list);
 	}
 
@@ -50,31 +59,13 @@ public class AppListAdapter extends AbstractBaseAdapter<Tile> implements ListAda
 		return (ai.flags & mask) == 0;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		View view;
-
-		if (convertView == null) {
-			view = mInflater.inflate(R.layout.tile, parent, false);
-		} else {
-			view = convertView;
-		}
-
-		Tile tile = (Tile) mTiles.get(position);
-		ImageView image = (ImageView) view.findViewById(R.id.wallpaper_image);
-		image.setImageDrawable(tile.mThumbnail);
-
-		TextView label = (TextView) view.findViewById(R.id.wallpaper_item_label);
-		label.setText(tile.mLabel);
-
-		return view;
-	}
-
 	private class ApplicationEnumerator extends AbstractEnumerator<ApplicationInfo, Tile, AppListAdapter> {
 
 		public ApplicationEnumerator(Context context, AbstractBaseAdapter<Tile> adapter) {
 			super(context, adapter);
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		protected Void doInBackground(List<ApplicationInfo>... params) {
 			final PackageManager packageManager = mContext.getPackageManager();

@@ -1,4 +1,4 @@
-package com.komok.wallpaperchanger;
+package com.komok.apprunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,17 @@ import com.komok.common.ApplicationHolder;
 import com.komok.common.BaseHelper;
 import com.komok.common.BaseHelper.Weekday;
 
-public class LiveWallpaperRandomActivity extends AbstractLiveWallpaperSetterActivity {
+public class AppRandomActivity extends AbstractAppSetterActivity {
 
 	@Override
-	protected ApplicationHolder getLiveWallpaper() {
-		Map<String, String> selectedWallpapersMap = BaseHelper.loadWallpapersMap(this, getDay().name());
+	protected ApplicationHolder getApp() {
+		Map<String, String> selectedAppsMap = BaseHelper.loadAppsMap(this, getDay().name());
 
-		if (selectedWallpapersMap.size() > 0) {
+		if (selectedAppsMap.size() > 0) {
 			Random random = new Random();
-			List<String> keys = new ArrayList<String>(selectedWallpapersMap.keySet());
+			List<String> keys = new ArrayList<String>(selectedAppsMap.keySet());
 			String label = keys.get(random.nextInt(keys.size()));
-			String uri = selectedWallpapersMap.get(label);
+			String uri = selectedAppsMap.get(label);
 
 			return new ApplicationHolder(label, uri);
 		} else {

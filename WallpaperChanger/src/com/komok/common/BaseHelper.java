@@ -1,4 +1,4 @@
-package com.komok.wallpaperchanger;
+package com.komok.common;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wink.json4j.JSONException;
+import org.apache.wink.json4j.OrderedJSONObject;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -19,22 +21,28 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.service.wallpaper.WallpaperService;
 
+
 public class BaseHelper {
 
 	private static final String wallpaperSettings = "wallpaperChangerSettings";
 	private static final String appSettings = "appRunnerSettings";
 	public static final String DAY = "day";
+	public static final String APPS = "apps";
 	public static final String ERROR = "error";
 	public static final String positionKey = "positionKey";
 
-	enum Weekday {
+	public enum Weekday {
 		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Random, List
 	};
 
-	public static boolean isLiveWallpaperValid(LiveWallpaper liveWallpaper, Activity activity) {
+	public enum Apps {
+		All, Sys, User
+	};
+
+	public static boolean isLiveWallpaperValid(ApplicationHolder liveWallpaper, Activity activity) {
 		boolean result = false;
-		String className = liveWallpaper.getClassName();
-		String packageName = liveWallpaper.getPackageName();
+		String className = liveWallpaper.getLabel();
+		String packageName = liveWallpaper.getUri();
 		if (className != null && packageName != null) {
 			Map<String, String> availableWallpapersMap = getAvailableWallpapersMap(activity);
 			if (availableWallpapersMap.containsKey(className) && packageName.equals(availableWallpapersMap.get(className))) {
@@ -57,13 +65,7 @@ public class BaseHelper {
 		return availableWallpapersMap;
 	}
 
-	public static void saveLiveWallpaper(LiveWallpaper liveWallpaper, Context context, Weekday day) {
-		Map<String, String> inputMap = new LinkedHashMap<String, String>();
-		inputMap.put(liveWallpaper.getClassName(), liveWallpaper.getPackageName());
-		saveWallpapersMap(inputMap, context, day.name());
-	}
-
-	public static LiveWallpaper loadLiveWallpaper(Context context, Weekday day) {
+	public static ApplicationHolder loadLiveWallpaper(Context context, Weekday day) {
 		Map<String, String> outputMap = loadWallpapersMap(context, day.name());
 		String className = null;
 		String packageName = null;
@@ -71,21 +73,49 @@ public class BaseHelper {
 			className = entry.getKey();
 			packageName = entry.getValue();
 		}
-		return new LiveWallpaper(className, packageName);
+		return new ApplicationHolder(className, packageName);
 
 	}
 
-	public static void saveListPosition(int position, Context context) {
-		SharedPreferences pSharedPref = context.getSharedPreferences(appSettings, Context.MODE_PRIVATE);
+	public static ApplicationHolder loadApp(Context context, Weekday day) {
+		Map<String, String> outputMap = loadAppsMap(context, day.name());
+		String className = null;
+		String packageName = null;
+		for (Map.Entry<String, String> entry : outputMap.entrySet()) {
+			className = entry.getKey();
+			packageName = entry.getValue();
+		}
+		return new ApplicationHolder(className, packageName);
+
+	}
+
+	public static void saveAppListPosition(int position, Context context) {
+		saveListPosition(position, context, appSettings);
+	}
+	
+	public static void saveWallpaperListPosition(int position, Context context) {
+		saveListPosition(position, context, wallpaperSettings);
+	}	
+	
+	public static void saveListPosition(int position, Context context, String settings) {
+		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
 			Editor editor = pSharedPref.edit();
 			editor.remove(positionKey).commit();
 			editor.putInt(positionKey, position).commit();
 		}
 	}
+	
+	public static int loadWallpaperListPosition(Context context) {
+		return loadListPosition(context, wallpaperSettings);
+	}
+	
+	public static int loadAppListPosition(Context context) {
+		return loadListPosition(context, appSettings);
+	}	
 
-	public static int loadListPosition(Context context) {
-		SharedPreferences pSharedPref = context.getSharedPreferences(appSettings, Context.MODE_PRIVATE);
+	public static int loadListPosition(Context context, String settings) {
+		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
 			return pSharedPref.getInt(positionKey, 0);
 		} else
@@ -99,11 +129,21 @@ public class BaseHelper {
 	public static void saveAppsMap(Map<String, String> inputMap, Context context, String randomMap) {
 		saveMap(inputMap, context, randomMap, appSettings);
 	}
+	
 
 	private static void saveMap(Map<String, String> inputMap, Context context, String randomMap, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
-			JSONObject jsonObject = new JSONObject(inputMap);
+			
+			OrderedJSONObject jsonObject = new OrderedJSONObject();
+			try {
+				jsonObject = new OrderedJSONObject(inputMap);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				ExceptionHandler.caughtException(e, context);
+			}
+
+
 			String jsonString = jsonObject.toString();
 			Editor editor = pSharedPref.edit();
 			editor.remove(randomMap).commit();
@@ -125,8 +165,8 @@ public class BaseHelper {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		try {
 			if (pSharedPref != null) {
-				String jsonString = pSharedPref.getString(mapName, (new JSONObject()).toString());
-				JSONObject jsonObject = new JSONObject(jsonString);
+				String jsonString = pSharedPref.getString(mapName, (new OrderedJSONObject()).toString());
+				OrderedJSONObject jsonObject = new OrderedJSONObject(jsonString);
 				Iterator<String> keysItr = jsonObject.keys();
 				while (keysItr.hasNext()) {
 					String key = keysItr.next();
@@ -147,7 +187,7 @@ public class BaseHelper {
 		}
 		return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
-	
+
 	public static Intent getIntent(String packageName, PackageManager pm) {
 		Intent intent = new Intent();
 		intent.setPackage(packageName);
@@ -165,11 +205,10 @@ public class BaseHelper {
 			i.setComponent(name);
 
 			return i;
-			//activity.getApplication().startActivity(i);
+			// activity.getApplication().startActivity(i);
 		} else {
 			return null;
 		}
 	}
-	
-	
+
 }

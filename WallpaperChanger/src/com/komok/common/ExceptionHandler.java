@@ -1,7 +1,8 @@
-package com.komok.wallpaperchanger;
+package com.komok.common;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
 
 import android.content.Context;
 import android.content.Intent;

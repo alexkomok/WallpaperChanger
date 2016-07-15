@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.komok.itemtouchhelper.helper;
+package com.komok.itemtouchhelper;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.komok.wallpaperchanger;
+package com.komok.common;
 
 import java.util.ArrayList;
 import java.util.List;

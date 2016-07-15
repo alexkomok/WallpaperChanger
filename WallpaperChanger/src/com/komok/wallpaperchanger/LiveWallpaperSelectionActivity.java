@@ -16,6 +16,11 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.komok.common.AbstractBaseAdapter;
+import com.komok.common.BaseHelper;
+import com.komok.common.IItemChecked;
+import com.komok.common.Tile;
+
 public class LiveWallpaperSelectionActivity extends ListActivity implements OnClickListener, IItemChecked {
 
 	Button button;
@@ -100,9 +105,9 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 			
 			if (checked.valueAt(i)) {
 				isAnyChecked = true;
-				Tile wallpaperTile = (Tile) mAdapter.getItem(position);
-				selectedTilesList.add(wallpaperTile);
-				selectedWallpapersMap.put(wallpaperTile.mLabel, "");
+				Tile tile = (Tile) mAdapter.getItem(position);
+				selectedTilesList.add(tile);
+				selectedWallpapersMap.put(tile.mLabel, tile.mIntent.toUri(0));
 			}
 		}
 		

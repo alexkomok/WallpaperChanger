@@ -2,6 +2,7 @@ package com.komok.wallpaperchanger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 
 import android.app.Activity;
 import android.app.WallpaperManager;
@@ -14,11 +15,15 @@ import android.os.Handler;
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;
 
+import com.komok.common.ApplicationHolder;
+import com.komok.common.BaseHelper;
+import com.komok.common.ExceptionHandler;
+
 abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 
 	private static final String TAG = "AbstractLiveWallpaperSetterActivity";
 
-	protected abstract LiveWallpaper getLiveWallpaper();
+	protected abstract ApplicationHolder getLiveWallpaper();
 
 	protected abstract BaseHelper.Weekday getDay();
 
@@ -56,44 +61,50 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 		}
 
 	}
-	
-	private boolean checkSetWallpaperComponentPermission()
-	{
-	    String permission = "android.permission.SET_WALLPAPER_COMPONENT";
-	    int res = this.checkCallingOrSelfPermission(permission);
-	    return (res == PackageManager.PERMISSION_GRANTED);            
+
+	private boolean checkSetWallpaperComponentPermission() {
+		String permission = "android.permission.SET_WALLPAPER_COMPONENT";
+		int res = this.checkCallingOrSelfPermission(permission);
+		return (res == PackageManager.PERMISSION_GRANTED);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-		LiveWallpaper wallpaper = getLiveWallpaper();
-		
-		if(wallpaper == null){
+		ApplicationHolder wallpaper = getLiveWallpaper();
+
+		if (wallpaper == null) {
 			ExceptionHandler.caughtException(new Exception(getString(R.string.error_update_list) + " for: " + getDay().name()), this);
 			return;
 		}
-		
+
 		Intent intent = new Intent();
 		boolean isSuccess = false;
 		String error = BaseHelper.ERROR;
 
+		try {
+			intent = Intent.parseUri(wallpaper.getUri(), 0);
+		} catch (URISyntaxException e) {
+			Log.e(TAG, "Failed to set wallpaper: " + e);
+			ExceptionHandler.caughtException(e, this);
+		}
+
+		String packageName = intent.getComponent().getPackageName();
+		String className = intent.getComponent().getClassName();
+
 		if (!isPermissionGranted && Build.VERSION.SDK_INT > 15) {
 
+			intent = new Intent();
 			intent.setAction(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
-			String packageName = wallpaper.getPackageName();
-			String className = wallpaper.getClassName();
 			intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(packageName, className));
+
 			isSuccess = true;
 			this.startActivityForResult(intent, 0);
 		} else if (isPermissionGranted) {
 			try {
 				intent = new Intent(WallpaperService.SERVICE_INTERFACE);
-
-				// if (WallpaperChangerHelper.isLiveWallpaperValid(wallpaper,
-				// this)) {
-				intent.setClassName(wallpaper.getPackageName(), wallpaper.getClassName());
+				intent.setClassName(packageName, className);
 				method.invoke(objIWallpaperManager, intent.getComponent());
 				isSuccess = true;
 
@@ -113,8 +124,10 @@ abstract class AbstractLiveWallpaperSetterActivity extends Activity {
 				// }
 			} catch (IllegalAccessException e) {
 				Log.e(TAG, "Failed to set wallpaper: " + e);
+				ExceptionHandler.caughtException(e, this);
 			} catch (InvocationTargetException e) {
 				Log.e(TAG, "Failed to set wallpaper: " + e);
+				ExceptionHandler.caughtException(e, this);
 			}
 		} else {
 			error = getString(R.string.no_permission);

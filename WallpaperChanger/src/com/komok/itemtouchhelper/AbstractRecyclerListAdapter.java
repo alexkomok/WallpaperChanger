@@ -1,4 +1,4 @@
-package com.komok.itemtouchhelper.helper;
+package com.komok.itemtouchhelper;
 
 import java.util.Collections;
 import java.util.List;

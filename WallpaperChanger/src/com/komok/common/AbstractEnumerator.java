@@ -1,4 +1,4 @@
-package com.komok.wallpaperchanger;
+package com.komok.common;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.BaseAdapter;
+
+import com.komok.wallpaperchanger.R;
 
 public abstract class AbstractEnumerator<T, S extends Tile, A extends BaseAdapter> extends AsyncTask<List<T>, S, Void> {
 	protected Context mContext;
@@ -38,6 +40,7 @@ public abstract class AbstractEnumerator<T, S extends Tile, A extends BaseAdapte
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onProgressUpdate(S... infos) {
 		for (S info : infos) {

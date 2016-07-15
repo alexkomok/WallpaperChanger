@@ -1,4 +1,4 @@
-package com.komok.wallpaperchanger;
+package com.komok.apprunner;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,13 +14,22 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.komok.common.BaseHelper;
+import com.komok.common.IItemChecked;
+import com.komok.common.Tile;
+import com.komok.wallpaperchanger.R;
 
 public class AppSelectionActivity extends ListActivity implements OnClickListener, IItemChecked {
 
 	Button button;
 	ListView listView;
 	CheckBox checkBox;
+	RadioGroup appsGroup;
+	RadioButton radioButtonAll, radioButtonSys, radioButtonUser;
 	AppListAdapter mAdapter;
 	String day;
 	Map<String, String> selectedAppsMap;
@@ -36,10 +45,65 @@ public class AppSelectionActivity extends ListActivity implements OnClickListene
 		setContentView(R.layout.activity_select);
 		findViewsById();
 
-		mAdapter = new AppListAdapter(this);
+		Bundle b = getIntent().getExtras();
+		String apps = b.getString(BaseHelper.APPS);
+
+		if (BaseHelper.Apps.All.name().equals(apps)) {
+			mAdapter = new AppListAdapter(this, BaseHelper.Apps.All);
+			radioButtonAll.setChecked(true);
+		} else if (BaseHelper.Apps.Sys.name().equals(apps)) {
+			mAdapter = new AppListAdapter(this, BaseHelper.Apps.Sys);
+			radioButtonSys.setChecked(true);
+		} else if (BaseHelper.Apps.User.name().equals(apps)) {
+			mAdapter = new AppListAdapter(this, BaseHelper.Apps.User);
+			radioButtonUser.setChecked(true);
+		} else {
+			mAdapter = new AppListAdapter(this, null);
+		}
 
 		listView.setAdapter(mAdapter);
 		button.setOnClickListener(this);
+		appsGroup.setVisibility(View.VISIBLE);
+	}
+
+	public void onRadioButtonClicked(View view) {
+		// Is the button now checked?
+		boolean checked = ((RadioButton) view).isChecked();
+
+		// Check which radio button was clicked
+		switch (view.getId()) {
+		case R.id.radioAll:
+			if (checked) {
+				Bundle b = new Bundle();
+				b.putString(BaseHelper.APPS, BaseHelper.Apps.All.name());
+				Intent intent = getIntent();
+				intent.putExtras(b);
+				finish();
+				startActivity(intent);
+			}
+			break;
+		case R.id.radioSys:
+			if (checked) {
+				Bundle b = new Bundle();
+				b.putString(BaseHelper.APPS, BaseHelper.Apps.Sys.name());
+				Intent intent = getIntent();
+				intent.putExtras(b);
+				finish();
+				startActivity(intent);
+			}
+			break;
+
+		case R.id.radioUser:
+			if (checked) {
+				Bundle b = new Bundle();
+				b.putString(BaseHelper.APPS, BaseHelper.Apps.User.name());
+				Intent intent = getIntent();
+				intent.putExtras(b);
+				finish();
+				startActivity(intent);
+			}
+			break;
+		}
 	}
 
 	public void onStart() {
@@ -48,6 +112,7 @@ public class AppSelectionActivity extends ListActivity implements OnClickListene
 		day = b.getString(BaseHelper.DAY);
 		error = b.getString(BaseHelper.ERROR);
 		checkBox.setChecked(false);
+
 		selectedAppsMap = BaseHelper.loadAppsMap(this, day);
 
 		if (BaseHelper.Weekday.Random.name().equals(day) || BaseHelper.Weekday.List.name().equals(day)) {
@@ -87,6 +152,10 @@ public class AppSelectionActivity extends ListActivity implements OnClickListene
 		listView = (ListView) findViewById(android.R.id.list);
 		button = (Button) findViewById(R.id.testbutton);
 		checkBox = (CheckBox) findViewById(R.id.select_all);
+		appsGroup = (RadioGroup) findViewById(R.id.radioApps);
+		radioButtonAll = (RadioButton) findViewById(R.id.radioAll);
+		radioButtonSys = (RadioButton) findViewById(R.id.radioSys);
+		radioButtonUser = (RadioButton) findViewById(R.id.radioUser);
 	}
 
 	public void onClick(View v) {
@@ -105,7 +174,7 @@ public class AppSelectionActivity extends ListActivity implements OnClickListene
 				selectedTilesList.add(tile);
 				String label = tile.mLabel;
 				try {
-					selectedAppsMap.put(label, "");
+					selectedAppsMap.put(label, tile.mIntent.toUri(0));
 				} catch (IllegalArgumentException e) {
 					Toast.makeText(this, "Duplicated name. Please, deselect: " + label, Toast.LENGTH_LONG).show();
 					return;
@@ -120,7 +189,7 @@ public class AppSelectionActivity extends ListActivity implements OnClickListene
 
 		BaseHelper.saveAppsMap(selectedAppsMap, this, day);
 
-		Intent intent = new Intent(this, LiveWallpaperResultActivity.class);
+		Intent intent = new Intent(this, AppResultActivity.class);
 
 		// Create a bundle object
 		Bundle b = new Bundle();
