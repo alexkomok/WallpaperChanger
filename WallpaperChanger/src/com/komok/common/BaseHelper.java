@@ -41,7 +41,11 @@ public class BaseHelper {
 	public enum Components {LiveWallpaper, Application, DayDream};
 	
 	public static String getFormattedComponentName(Components component, Weekday day ){
-		return component.name() + ": " + day.name();
+		return getFormattedComponentName(component.name(), day.name());
+	}
+	
+	public static String getFormattedComponentName(String component, String day ){
+		return component + ": " + day;
 	}
 	
 	public static List<String> loadComponentsList(Context context){

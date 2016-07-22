@@ -61,7 +61,7 @@ public class DreamListAdapter extends AbstractBaseAdapter<Tile> {
 						icon = wallpaperIcon;
 					}
 
-					Tile component = new Tile(icon, null, splits[0] + ": " + splits[1]);
+					Tile component = new Tile(icon, null, BaseHelper.getFormattedComponentName(splits[0], splits[1]));
 					publishProgress(component);
 				}
 			}
