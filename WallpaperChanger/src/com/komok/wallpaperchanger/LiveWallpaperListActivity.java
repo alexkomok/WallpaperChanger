@@ -1,6 +1,7 @@
 package com.komok.wallpaperchanger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -21,10 +22,11 @@ public class LiveWallpaperListActivity extends AbstractLiveWallpaperSetterActivi
 			if(savedPosition < size){
 				int nextPosition = savedPosition + 1 >= size ? 0 : savedPosition + 1;
 				List<String> keys = new ArrayList<String>(selectedWallpapersMap.keySet());
-				String className = keys.get(savedPosition);
-				String packageName = selectedWallpapersMap.get(className);
+				Collections.reverse(keys);
+				String label = keys.get(savedPosition);
+				String uri = selectedWallpapersMap.get(label);
 				BaseHelper.saveWallpaperListPosition(nextPosition, this);
-				return new ApplicationHolder(className, packageName);
+				return new ApplicationHolder(label, uri);
 			}
 			
 		} 

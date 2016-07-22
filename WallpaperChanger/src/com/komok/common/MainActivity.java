@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.komok.apprunner.AppChangerActivity;
 import com.komok.wallpaperchanger.LiveWallpaperChangerActivity;
@@ -26,6 +27,14 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		apps_button.setOnClickListener(this);
 		wallpapers_button.setOnClickListener(this);
+
+		Bundle b = getIntent().getExtras();
+		if (b != null) {
+			String error = b.getString(BaseHelper.ERROR);
+			if (error != null) {
+				Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+			}
+		}
 
 	}
 

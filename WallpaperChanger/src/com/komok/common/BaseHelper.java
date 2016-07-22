@@ -1,16 +1,14 @@
 package com.komok.common;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.OrderedJSONObject;
-import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,17 +17,18 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.service.wallpaper.WallpaperService;
 
 
 public class BaseHelper {
 
 	private static final String wallpaperSettings = "wallpaperChangerSettings";
 	private static final String appSettings = "appRunnerSettings";
+	private static final String dreamSettings = "dayDreamSettings";
 	public static final String DAY = "day";
 	public static final String APPS = "apps";
 	public static final String ERROR = "error";
 	public static final String positionKey = "positionKey";
+	public static final String dreamChoice = "dreamChoice";
 
 	public enum Weekday {
 		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Random, List
@@ -38,32 +37,6 @@ public class BaseHelper {
 	public enum Apps {
 		All, Sys, User
 	};
-
-	public static boolean isLiveWallpaperValid(ApplicationHolder liveWallpaper, Activity activity) {
-		boolean result = false;
-		String className = liveWallpaper.getLabel();
-		String packageName = liveWallpaper.getUri();
-		if (className != null && packageName != null) {
-			Map<String, String> availableWallpapersMap = getAvailableWallpapersMap(activity);
-			if (availableWallpapersMap.containsKey(className) && packageName.equals(availableWallpapersMap.get(className))) {
-				result = true;
-			}
-		}
-
-		return result;
-	}
-
-	public static Map<String, String> getAvailableWallpapersMap(Activity activity) {
-		Map<String, String> availableWallpapersMap = new LinkedHashMap<String, String>();
-		PackageManager packageManager = activity.getPackageManager();
-		List<ResolveInfo> availableWallpapersList = packageManager.queryIntentServices(new Intent(WallpaperService.SERVICE_INTERFACE),
-				PackageManager.GET_META_DATA);
-
-		for (ResolveInfo resolveInfo : availableWallpapersList) {
-			availableWallpapersMap.put(resolveInfo.serviceInfo.name, resolveInfo.serviceInfo.packageName);
-		}
-		return availableWallpapersMap;
-	}
 
 	public static ApplicationHolder loadLiveWallpaper(Context context, Weekday day) {
 		Map<String, String> outputMap = loadWallpapersMap(context, day.name());
@@ -97,6 +70,10 @@ public class BaseHelper {
 		saveListPosition(position, context, wallpaperSettings);
 	}	
 	
+	public static void saveDreamListPosition(int position, Context context) {
+		saveListPosition(position, context, dreamSettings);
+	}	
+	
 	public static void saveListPosition(int position, Context context, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
@@ -106,12 +83,49 @@ public class BaseHelper {
 		}
 	}
 	
+	public static void saveDreamChoice(List<String> choice, Context context) {
+		SharedPreferences pSharedPref = context.getSharedPreferences(dreamSettings, Context.MODE_PRIVATE);
+		if (pSharedPref != null) {
+			JSONArray jsonArray = new JSONArray();
+			try {
+				jsonArray = new JSONArray(choice);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				ExceptionHandler.caughtException(e, context);
+			}
+
+			Editor editor = pSharedPref.edit();
+			editor.remove(dreamChoice).commit();
+			editor.putString(dreamChoice, jsonArray.toString()).commit();
+		}
+	}
+	
+	public static List<String> loadDreamChoice(Context context) {
+		SharedPreferences pSharedPref = context.getSharedPreferences(dreamSettings, Context.MODE_PRIVATE);
+		if (pSharedPref != null) {
+			String pref = pSharedPref.getString(dreamChoice, "");
+			if (!"".equals(pref) && pref != null) {
+				try {
+
+					return new JSONArray(pref);
+				} catch (JSONException e) {
+					e.printStackTrace();
+					ExceptionHandler.caughtException(e, context);
+				}}
+		} 
+			return new ArrayList<String>();
+	}
+	
 	public static int loadWallpaperListPosition(Context context) {
 		return loadListPosition(context, wallpaperSettings);
 	}
 	
 	public static int loadAppListPosition(Context context) {
 		return loadListPosition(context, appSettings);
+	}
+	
+	public static int loadDreamListPosition(Context context) {
+		return loadListPosition(context, dreamSettings);
 	}	
 
 	public static int loadListPosition(Context context, String settings) {
@@ -161,24 +175,19 @@ public class BaseHelper {
 	}
 
 	private static Map<String, String> loadMap(Context context, String mapName, String settings) {
-		Map<String, String> outputMap = new LinkedHashMap<String, String>();
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
-		try {
-			if (pSharedPref != null) {
-				String jsonString = pSharedPref.getString(mapName, (new OrderedJSONObject()).toString());
-				OrderedJSONObject jsonObject = new OrderedJSONObject(jsonString);
-				Iterator<String> keysItr = jsonObject.keys();
-				while (keysItr.hasNext()) {
-					String key = keysItr.next();
-					String value = (String) jsonObject.get(key);
-					outputMap.put(key, value);
-				}
+		OrderedJSONObject jsonObject = new OrderedJSONObject();
+		if (pSharedPref != null) {
+			String jsonString = pSharedPref.getString(mapName, (new OrderedJSONObject()).toString());
+			try {
+				jsonObject = new OrderedJSONObject(jsonString);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				ExceptionHandler.caughtException(e, context);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			ExceptionHandler.caughtException(e, context);
 		}
-		return outputMap;
+
+		return jsonObject;
 	}
 
 	public static String capitalizeFirstLetter(String original) {
