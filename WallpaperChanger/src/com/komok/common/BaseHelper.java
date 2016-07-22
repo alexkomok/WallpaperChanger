@@ -37,6 +37,34 @@ public class BaseHelper {
 	public enum Apps {
 		All, Sys, User
 	};
+	
+	public enum Components {LiveWallpaper, Application, DayDream};
+	
+	public static String getFormattedComponentName(Components component, Weekday day ){
+		return component.name() + ": " + day.name();
+	}
+	
+	public static List<String> loadComponentsList(Context context){
+		List<String> results = new ArrayList<String>();
+		
+		for (Weekday day : Weekday.values()) {
+			Map<String, String> map = null; 
+			for (Components component : Components.values()) {
+				map = null;
+				if (Components.LiveWallpaper.equals(component)) {
+					map = loadWallpapersMap(context, day.name());
+				} else if (Components.Application.equals(component)) {
+					map = loadAppsMap(context, day.name());
+				} else if (Components.DayDream.equals(component)) {
+
+				}
+				
+				if(map != null && map.size() > 0)
+					results.add(getFormattedComponentName(component, day));
+			}
+		}
+		return results;
+	}
 
 	public static ApplicationHolder loadLiveWallpaper(Context context, Weekday day) {
 		Map<String, String> outputMap = loadWallpapersMap(context, day.name());

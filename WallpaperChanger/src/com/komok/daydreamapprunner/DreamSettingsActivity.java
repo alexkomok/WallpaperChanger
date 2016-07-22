@@ -1,52 +1,44 @@
 package com.komok.daydreamapprunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.komok.common.BaseHelper;
+import com.komok.common.IItemChecked;
 import com.komok.common.MainActivity;
 import com.komok.common.Tile;
 import com.komok.wallpaperchanger.R;
 
-public class DreamSettingsActivity extends Activity {
+public class DreamSettingsActivity extends Activity implements OnClickListener, IItemChecked {
 	
 	Button button;
 	ListView listView;
 	CheckBox checkBox;
 	DreamListAdapter mAdapter;
 	List<String> selectedList;
+	String message;
  
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select);
 		findViewsById();
-		mAdapter = new DreamListAdapter(this, BaseHelper.Apps.All);
-		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		mAdapter = new DreamListAdapter(this);
+		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setAdapter(mAdapter);
-/*        setContentView(R.layout.activity_dream_settings);
-        final SharedPreferences settings = getSharedPreferences(PREFS_KEY, 0);
-        boolean animate = settings.getBoolean("animateDream", true);
- 
-        final ToggleButton toggle = (ToggleButton) findViewById(R.id.toggle_animate_button);
-        toggle.setChecked(animate);
-        toggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
- 
-            @Override
-            public void onCheckedChanged(final CompoundButton buttonView,
-                    final boolean isChecked) {
-                SharedPreferences.Editor prefEditor = settings.edit();
-                prefEditor.putBoolean("animateDream", isChecked);
-                prefEditor.commit();
-            }
-        });*/
+		message = getString(R.string.select_one_or_more);
+		button.setOnClickListener(this);
     }
     
 	public void onStart() {
@@ -54,7 +46,7 @@ public class DreamSettingsActivity extends Activity {
 
 		selectedList = BaseHelper.loadDreamChoice(this);
 		
-		if(selectedList == null || selectedList.size() == 0){
+/*		if(selectedList == null || selectedList.size() == 0){
 			Intent intent = new Intent(this, MainActivity.class);
 
 			// Create a bundle object
@@ -65,12 +57,12 @@ public class DreamSettingsActivity extends Activity {
 			intent.putExtras(b);
 
 			// start the ResultActivity
-			startActivity(intent);
+			//startActivity(intent);
 		} else {
 			setItemChecked();
 		}
 
-/*		if (BaseHelper.Weekday.Random.name().equals(day) || BaseHelper.Weekday.List.name().equals(day)) {
+		if (BaseHelper.Weekday.Random.name().equals(day) || BaseHelper.Weekday.List.name().equals(day)) {
 			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 			checkBox.setVisibility(View.VISIBLE);
 			message = getString(R.string.select_one_or_more);
@@ -92,20 +84,78 @@ public class DreamSettingsActivity extends Activity {
     
 	private void findViewsById() {
 		listView = (ListView) findViewById(android.R.id.list);
-		button = (Button) findViewById(R.id.choice_button);
+		button = (Button) findViewById(R.id.testbutton);
 		checkBox = (CheckBox) findViewById(R.id.select_all);
 
 	}
 	
-	public void setItemChecked() {
+	
+	public void onClick(View v) {
+		SparseBooleanArray checked = listView.getCheckedItemPositions();
+		selectedList = new ArrayList<String>();
 
-		for (int i = 0; i < listView.getAdapter().getCount(); i++) {
-			Tile tile = (Tile) listView.getItemAtPosition(i);
-			String label = tile.mLabel;
-			if (selectedList.contains(label)){
-				listView.setItemChecked(i, true);
-			} else {
-				listView.setItemChecked(i, false);
+		boolean isAnyChecked = false;
+		for (int i = 0; i < checked.size(); i++) {
+			// Item position in adapter
+			int position = checked.keyAt(i);
+
+			if (checked.valueAt(i)) {
+				isAnyChecked = true;
+				Tile tile = (Tile) mAdapter.getItem(position);
+				String label = tile.mLabel;
+				try {
+					selectedList.add(tile.mLabel);
+				} catch (IllegalArgumentException e) {
+					Toast.makeText(this, "Duplicated name. Please, deselect: " + label, Toast.LENGTH_LONG).show();
+					return;
+				}
+			}
+		}
+
+		if (!isAnyChecked) {
+			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		BaseHelper.saveDreamChoice(selectedList, this);
+
+/*		Intent intent = new Intent(this, AppResultActivity.class);
+
+		// Create a bundle object
+		Bundle b = new Bundle();
+		b.putString(BaseHelper.DAY, day);
+
+		// Add the bundle to the intent.
+		intent.putExtras(b);
+
+		// start the ResultActivity
+		startActivity(intent);*/
+	}	
+	
+	public void setItemChecked() {
+		
+		if(listView.getAdapter().getCount() == 0){
+			Intent intent = new Intent(this, MainActivity.class);
+
+			// Create a bundle object
+			Bundle b = new Bundle();
+			b.putString(BaseHelper.ERROR, getString(R.string.select_one));
+
+			// Add the bundle to the intent.
+			intent.putExtras(b);
+
+			// start the ResultActivity
+			startActivity(intent);
+		} else {
+
+			for (int i = 0; i < listView.getAdapter().getCount(); i++) {
+				Tile tile = (Tile) listView.getItemAtPosition(i);
+				String label = tile.mLabel;
+				if (selectedList.contains(label)){
+					listView.setItemChecked(i, true);
+				} else {
+					listView.setItemChecked(i, false);
+				}
 			}
 		}
 	}
