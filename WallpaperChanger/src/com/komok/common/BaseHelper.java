@@ -29,7 +29,8 @@ public class BaseHelper {
 	public static final String ERROR = "error";
 	public static final String positionKey = "positionKey";
 	public static final String dreamChoice = "dreamChoice";
-
+	public static final String splitter = ": ";
+	
 	public enum Weekday {
 		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Random, List
 	};
@@ -45,7 +46,7 @@ public class BaseHelper {
 	}
 	
 	public static String getFormattedComponentName(String component, String day ){
-		return component + ": " + day;
+		return component + splitter + day;
 	}
 	
 	public static List<String> loadComponentsList(Context context){

@@ -50,7 +50,7 @@ public class DreamListAdapter extends AbstractBaseAdapter<Tile> {
 
 			for (String info : list) {
 				if (info != null) {
-					String[] splits = info.split(":");
+					String[] splits = info.split(BaseHelper.splitter);
 					Drawable icon = null;
 
 					if (BaseHelper.Components.Application.name().equals(splits[0])) {
