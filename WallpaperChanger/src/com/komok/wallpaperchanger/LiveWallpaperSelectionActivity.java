@@ -89,7 +89,7 @@ public class LiveWallpaperSelectionActivity extends ListActivity implements OnCl
 
 	private void findViewsById() {
 		listView = (ListView) findViewById(android.R.id.list);
-		button = (Button) findViewById(R.id.testbutton);
+		button = (Button) findViewById(R.id.button_next);
 		checkBox = (CheckBox) findViewById(R.id.select_all);
 	}
 

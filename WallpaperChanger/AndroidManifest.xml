@@ -230,6 +230,11 @@
             android:name="com.komok.daydreamapprunner.DreamSettingsActivity"
             android:label="@string/app_name" >
         </activity>
+        
+        <activity
+            android:name="com.komok.daydreamapprunner.DayDreamResultActivity"
+            android:label="@string/app_name" >
+        </activity>
 
         <service
             android:name="com.komok.daydreamapprunner.DayDreamAppRunnerService"

@@ -9,6 +9,8 @@
     <string name="result_activity">Selected Wallpapers</string>
     <string name="error_activity">Error</string>
     
+    <string name="create">Create Changer</string>
+    
     <string name="submit">Next</string>
 	<string name="select_all">Select All</string>
 	<string name="error_title">Error:</string>

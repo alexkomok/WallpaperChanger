@@ -21,78 +21,65 @@ import com.komok.common.Tile;
 import com.komok.wallpaperchanger.R;
 
 public class DreamSettingsActivity extends Activity implements OnClickListener, IItemChecked {
-	
-	Button button;
+
+	Button buttonNext;
+	Button buttonCreateChanger;
 	ListView listView;
 	CheckBox checkBox;
 	DreamListAdapter mAdapter;
-	List<String> selectedList;
+	static List<String> selectedList;
+	static List<Tile> selectedTilesList;
 	String message;
- 
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	String error;
+
+	@Override
+	protected void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select);
 		findViewsById();
 		mAdapter = new DreamListAdapter(this);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setAdapter(mAdapter);
 		message = getString(R.string.select_one_or_more);
-		button.setOnClickListener(this);
-    }
-    
+		buttonNext.setOnClickListener(this);
+		buttonCreateChanger.setVisibility(View.VISIBLE);
+		buttonCreateChanger.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+				// start the ResultActivity
+				startActivity(intent);
+			}
+		});
+	}
+
 	public void onStart() {
 		super.onStart();
 
 		selectedList = BaseHelper.loadDreamChoice(this);
-		
-/*		if(selectedList == null || selectedList.size() == 0){
-			Intent intent = new Intent(this, MainActivity.class);
-
-			// Create a bundle object
-			Bundle b = new Bundle();
-			b.putString(BaseHelper.ERROR, getString(R.string.select_one));
-
-			// Add the bundle to the intent.
-			intent.putExtras(b);
-
-			// start the ResultActivity
-			//startActivity(intent);
-		} else {
-			setItemChecked();
-		}
-
-		if (BaseHelper.Weekday.Random.name().equals(day) || BaseHelper.Weekday.List.name().equals(day)) {
-			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-			checkBox.setVisibility(View.VISIBLE);
-			message = getString(R.string.select_one_or_more);
-		} else {
-			listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-			checkBox.setVisibility(View.GONE);
-			message = getString(R.string.select_one);
-		}
+		Bundle b = getIntent().getExtras();
+		error = b == null ? null : b.getString(BaseHelper.ERROR);
 
 		if (BaseHelper.ERROR.equals(error)) {
 			Toast.makeText(this, getString(R.string.error_update_list), Toast.LENGTH_LONG).show();
 		} else if (error != null) {
 			Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-		}*/
-
-		
+		}
 
 	}
-    
+
 	private void findViewsById() {
 		listView = (ListView) findViewById(android.R.id.list);
-		button = (Button) findViewById(R.id.testbutton);
+		buttonNext = (Button) findViewById(R.id.button_next);
 		checkBox = (CheckBox) findViewById(R.id.select_all);
+		buttonCreateChanger = (Button) findViewById(R.id.button_select_type);
 
 	}
-	
-	
+
 	public void onClick(View v) {
 		SparseBooleanArray checked = listView.getCheckedItemPositions();
 		selectedList = new ArrayList<String>();
+		selectedTilesList = new ArrayList<Tile>();
 
 		boolean isAnyChecked = false;
 		for (int i = 0; i < checked.size(); i++) {
@@ -102,6 +89,7 @@ public class DreamSettingsActivity extends Activity implements OnClickListener, 
 			if (checked.valueAt(i)) {
 				isAnyChecked = true;
 				Tile tile = (Tile) mAdapter.getItem(position);
+				selectedTilesList.add(tile);
 				String label = tile.mLabel;
 				try {
 					selectedList.add(tile.mLabel);
@@ -119,22 +107,15 @@ public class DreamSettingsActivity extends Activity implements OnClickListener, 
 
 		BaseHelper.saveDreamChoice(selectedList, this);
 
-/*		Intent intent = new Intent(this, AppResultActivity.class);
-
-		// Create a bundle object
-		Bundle b = new Bundle();
-		b.putString(BaseHelper.DAY, day);
-
-		// Add the bundle to the intent.
-		intent.putExtras(b);
+		Intent intent = new Intent(this, DayDreamResultActivity.class);
 
 		// start the ResultActivity
-		startActivity(intent);*/
-	}	
-	
+		startActivity(intent);
+	}
+
 	public void setItemChecked() {
-		
-		if(listView.getAdapter().getCount() == 0){
+
+		if (listView.getAdapter().getCount() == 0) {
 			Intent intent = new Intent(this, MainActivity.class);
 
 			// Create a bundle object
@@ -151,7 +132,7 @@ public class DreamSettingsActivity extends Activity implements OnClickListener, 
 			for (int i = 0; i < listView.getAdapter().getCount(); i++) {
 				Tile tile = (Tile) listView.getItemAtPosition(i);
 				String label = tile.mLabel;
-				if (selectedList.contains(label)){
+				if (selectedList.contains(label)) {
 					listView.setItemChecked(i, true);
 				} else {
 					listView.setItemChecked(i, false);
@@ -159,8 +140,7 @@ public class DreamSettingsActivity extends Activity implements OnClickListener, 
 			}
 		}
 	}
-	
-	
+
 	public void onCheckboxClicked(View view) {
 		// Is the view now checked?
 		boolean checked = ((CheckBox) view).isChecked();
@@ -181,6 +161,5 @@ public class DreamSettingsActivity extends Activity implements OnClickListener, 
 
 		}
 	}
-	
 
 }
