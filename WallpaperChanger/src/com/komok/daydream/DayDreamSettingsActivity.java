@@ -1,4 +1,4 @@
-package com.komok.daydreamapprunner;
+package com.komok.daydream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ import com.komok.common.MainActivity;
 import com.komok.common.Tile;
 import com.komok.wallpaperchanger.R;
 
-public class DreamSettingsActivity extends Activity implements OnClickListener, IItemChecked {
+public class DayDreamSettingsActivity extends Activity implements OnClickListener, IItemChecked {
 
 	Button buttonNext;
 	Button buttonCreateChanger;
 	ListView listView;
 	CheckBox checkBox;
-	DreamListAdapter mAdapter;
+	DayDreamListAdapter mAdapter;
 	static List<String> selectedList;
 	static List<Tile> selectedTilesList;
 	String message;
@@ -37,7 +37,7 @@ public class DreamSettingsActivity extends Activity implements OnClickListener, 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select);
 		findViewsById();
-		mAdapter = new DreamListAdapter(this);
+		mAdapter = new DayDreamListAdapter(this);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setAdapter(mAdapter);
 		message = getString(R.string.select_one_or_more);
@@ -107,10 +107,10 @@ public class DreamSettingsActivity extends Activity implements OnClickListener, 
 
 		BaseHelper.saveDreamChoice(selectedList, this);
 
-		Intent intent = new Intent(this, DayDreamResultActivity.class);
+		//Intent intent = new Intent(this, DayDreamResultActivity.class);
 
 		// start the ResultActivity
-		startActivity(intent);
+		//startActivity(intent);
 	}
 
 	public void setItemChecked() {

@@ -1,4 +1,4 @@
-package com.komok.apprunner;
+package com.komok.daydreamchanger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import com.komok.itemtouchhelper.OnStartDragListener;
 import com.komok.itemtouchhelper.SimpleItemTouchHelperCallback;
 import com.komok.wallpaperchanger.R;
 
-public class AppResultActivity extends Activity implements OnClickListener, OnStartDragListener {
+public class DayDreamResultActivity extends Activity implements OnClickListener, OnStartDragListener {
 	String day;
 	Button set_wallpaper;
 	RecyclerView listView;
@@ -35,38 +35,38 @@ public class AppResultActivity extends Activity implements OnClickListener, OnSt
 
 		Button mButton = (Button) findViewById(R.id.set_wallpaper);
 		if (BaseHelper.Weekday.Random.name().equals(day)) {
-			mButton.setText(getResources().getString(R.string.set_rendom_app));
+			mButton.setText(getResources().getString(R.string.set_rendom_wallpaper));
 		} else {
-			mButton.setText(getResources().getString(R.string.set_app));
+			mButton.setText(getResources().getString(R.string.set_wallpaper));
 		}
 
 		mButton.setOnClickListener(this);
 
 		listView = (RecyclerView) findViewById(R.id.outputList);
-		AppResultListAdapter adapter = new AppResultListAdapter(this, this, AppSelectionActivity.selectedTilesList);
-
+		DayDreamResultListAdapter adapter = new DayDreamResultListAdapter(this, this, DayDreamSelectionActivity.selectedTilesList);
+		
 		listView.setHasFixedSize(true);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
-
-		ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
-		mItemTouchHelper = new ItemTouchHelper(callback);
-		mItemTouchHelper.attachToRecyclerView(listView);
+		
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(listView);
 	}
 
 	@Override
 	public void onClick(View v) {
-
-		Map<String, String> selectedAppsMap = new LinkedHashMap<String, String>();
-
-		for (Tile tile : AppSelectionActivity.selectedTilesList) {
-			selectedAppsMap.put(tile.mLabel, tile.mIntent.toUri(0));
+		
+		Map<String, String> selectedWallpapersMap = new LinkedHashMap<String, String>();
+		
+		for(Tile tile : DayDreamSelectionActivity.selectedTilesList){
+			selectedWallpapersMap.put(tile.mLabel, tile.mIntent.toUri(0));
 		}
 
-		BaseHelper.saveAppsMap(selectedAppsMap, this, day);
-
-		if (selectedAppsMap.size() == 0) {
-			Intent intent = new Intent(this, AppSelectionActivity.class);
+		BaseHelper.saveWallpapersMap(selectedWallpapersMap, this, day);
+		
+		if (selectedWallpapersMap.size() == 0) {
+			Intent intent = new Intent(this, DayDreamSelectionActivity.class);
 
 			// Create a bundle object
 			Bundle b = new Bundle();
@@ -88,31 +88,30 @@ public class AppResultActivity extends Activity implements OnClickListener, OnSt
 		} else {
 
 			if (BaseHelper.Weekday.Random.name().equals(day)) {
-				startActivity(new Intent(this, AppRandomActivity.class));
+				startActivity(new Intent(this, DayDreamRandomActivity.class));
 			} else if (BaseHelper.Weekday.Monday.name().equals(day)) {
-				startActivity(new Intent(this, AppMondayActivity.class));
+				startActivity(new Intent(this, DayDreamMondayActivity.class));
 			} else if (BaseHelper.Weekday.Tuesday.name().equals(day)) {
-				startActivity(new Intent(this, AppTuesdayActivity.class));
+				startActivity(new Intent(this, DayDreamTuesdayActivity.class));
 			} else if (BaseHelper.Weekday.Wednesday.name().equals(day)) {
-				startActivity(new Intent(this, AppWednesdayActivity.class));
+				startActivity(new Intent(this, DayDreamWednesdayActivity.class));
 			} else if (BaseHelper.Weekday.Thursday.name().equals(day)) {
-				startActivity(new Intent(this, AppThursdayActivity.class));
+				startActivity(new Intent(this, DayDreamThursdayActivity.class));
 			} else if (BaseHelper.Weekday.Friday.name().equals(day)) {
-				startActivity(new Intent(this, AppFridayActivity.class));
+				startActivity(new Intent(this, DayDreamFridayActivity.class));
 			} else if (BaseHelper.Weekday.Saturday.name().equals(day)) {
-				startActivity(new Intent(this, AppSaturdayActivity.class));
+				startActivity(new Intent(this, DayDreamSaturdayActivity.class));
 			} else if (BaseHelper.Weekday.Sunday.name().equals(day)) {
-				startActivity(new Intent(this, AppSundayActivity.class));
+				startActivity(new Intent(this, DayDreamSundayActivity.class));
 			} else if (BaseHelper.Weekday.List.name().equals(day)) {
-				startActivity(new Intent(this, AppListActivity.class));
-			}
-		}
+				startActivity(new Intent(this, DayDreamListActivity.class));
+			}}
 
 	}
 
-	@Override
-	public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-		mItemTouchHelper.startDrag(viewHolder);
-	}
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
+    }
 
 }

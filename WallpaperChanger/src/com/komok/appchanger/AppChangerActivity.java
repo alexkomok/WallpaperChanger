@@ -1,4 +1,4 @@
-package com.komok.apprunner;
+package com.komok.appchanger;
 
 import com.komok.common.AbstractChangerActivity;
 

@@ -124,20 +124,20 @@
         
 
         <activity
-            android:name="com.komok.apprunner.AppChangerActivity"
+            android:name="com.komok.appchanger.AppChangerActivity"
             android:label="@string/main_activity">
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppResultActivity"
+            android:name="com.komok.appchanger.AppResultActivity"
             android:label="@string/result_activity" >
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppSelectionActivity"
+            android:name="com.komok.appchanger.AppSelectionActivity"
             android:label="@string/result_activity" >
         </activity>
         
         <activity
-            android:name="com.komok.apprunner.AppRandomActivity"
+            android:name="com.komok.appchanger.AppRandomActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -145,7 +145,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppListActivity"
+            android:name="com.komok.appchanger.AppListActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -154,7 +154,7 @@
             </intent-filter>
         </activity>        
         <activity
-            android:name="com.komok.apprunner.AppMondayActivity"
+            android:name="com.komok.appchanger.AppMondayActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -163,7 +163,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppTuesdayActivity"
+            android:name="com.komok.appchanger.AppTuesdayActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -172,7 +172,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppWednesdayActivity"
+            android:name="com.komok.appchanger.AppWednesdayActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -181,7 +181,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppThursdayActivity"
+            android:name="com.komok.appchanger.AppThursdayActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -190,7 +190,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppFridayActivity"
+            android:name="com.komok.appchanger.AppFridayActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -199,7 +199,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppSaturdayActivity"
+            android:name="com.komok.appchanger.AppSaturdayActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -208,7 +208,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.komok.apprunner.AppSundayActivity"
+            android:name="com.komok.appchanger.AppSundayActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -216,6 +216,43 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+        
+        
+        
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamChangerActivity"
+            android:label="@string/main_activity">
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamResultActivity"
+            android:label="@string/result_activity" >
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamSelectionActivity"
+            android:label="@string/result_activity" >
+        </activity>
+        
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamRandomActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamListActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>         
+        
+        
+        
         
         
         <activity android:name="com.komok.common.ErrorViewActivity" >
@@ -227,17 +264,17 @@
         </activity>
         
         <activity
-            android:name="com.komok.daydreamapprunner.DreamSettingsActivity"
+            android:name="com.komok.daydream.DayDreamSettingsActivity"
             android:label="@string/app_name" >
         </activity>
         
         <activity
-            android:name="com.komok.daydreamapprunner.DayDreamResultActivity"
+            android:name="com.komok.daydream.DayDreamResultActivity"
             android:label="@string/app_name" >
         </activity>
 
         <service
-            android:name="com.komok.daydreamapprunner.DayDreamAppRunnerService"
+            android:name="com.komok.daydream.DayDreamService"
             android:exported="true"
             android:label="Application Runner" >
             <meta-data

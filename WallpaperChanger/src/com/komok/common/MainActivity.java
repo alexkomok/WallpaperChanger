@@ -8,7 +8,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.komok.apprunner.AppChangerActivity;
+import com.komok.appchanger.AppChangerActivity;
+import com.komok.daydreamchanger.DayDreamChangerActivity;
 import com.komok.wallpaperchanger.LiveWallpaperChangerActivity;
 import com.komok.wallpaperchanger.R;
 
@@ -16,6 +17,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	Button apps_button;
 	Button wallpapers_button;
+	Button dreams_button;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -27,6 +29,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		apps_button.setOnClickListener(this);
 		wallpapers_button.setOnClickListener(this);
+		dreams_button.setOnClickListener(this);
 
 		Bundle b = getIntent().getExtras();
 		if (b != null) {
@@ -41,6 +44,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void findViewsById() {
 		apps_button = (Button) findViewById(R.id.apps_button);
 		wallpapers_button = (Button) findViewById(R.id.wallpapers_button);
+		dreams_button = (Button) findViewById(R.id.dreams_button);
 	}
 
 	@Override
@@ -55,6 +59,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.wallpapers_button:
 			intent = new Intent(this, LiveWallpaperChangerActivity.class);
 			break;
+		case R.id.dreams_button:
+			intent = new Intent(this, DayDreamChangerActivity.class);
+			break;			
 
 		}
 

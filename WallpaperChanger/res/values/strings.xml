@@ -37,5 +37,6 @@
 	<string name="radio_sys">System apps</string>
 	<string name="radio_user">User apps</string>
 	<string name="main_apps">Applications</string>
+	<string name="main_dreams">Day Dreams</string>
 	<string name="main_wallpapers">Live Wallpapers</string>
 </resources>

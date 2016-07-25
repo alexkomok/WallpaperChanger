@@ -17,6 +17,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Bundle;
 
 
 public class BaseHelper {
@@ -252,5 +253,27 @@ public class BaseHelper {
 			return null;
 		}
 	}
+	
+	
+	public static void getIntentTest(String packageName, PackageManager pm) {
+		Intent intent = new Intent();
+		intent.setPackage(packageName);
+
+		List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER | PackageManager.GET_META_DATA);
+		Collections.sort(resolveInfos, new ResolveInfo.DisplayNameComparator(pm));
+
+		for (ResolveInfo info : resolveInfos) {
+			
+			ActivityInfo aInfo = info.activityInfo;
+            Bundle metadata = aInfo.metaData;
+            Object o = null;
+            if(metadata != null) {
+            	o = metadata.get("android.service.dream");
+            }
+            ResolveInfo launchable = info;
+
+			// activity.getApplication().startActivity(i);
+		} 
+	}	
 
 }

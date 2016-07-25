@@ -1,4 +1,4 @@
-package com.komok.daydreamapprunner;
+package com.komok.daydream;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.service.dreams.DreamService;
 
-public class DayDreamAppRunnerService extends DreamService {
+public class DayDreamService extends DreamService {
 
 	@Override
 	public void onAttachedToWindow() {

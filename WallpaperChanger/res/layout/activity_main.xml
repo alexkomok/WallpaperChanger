@@ -14,6 +14,12 @@
         android:id="@+id/wallpapers_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/main_wallpapers" />    
+        android:text="@string/main_wallpapers" /> 
+        
+    <Button
+        android:id="@+id/dreams_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_dreams" />    
 
 </LinearLayout>

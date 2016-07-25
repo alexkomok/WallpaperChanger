@@ -1,10 +1,8 @@
-package com.komok.wallpaperchanger;
+package com.komok.appchanger;
 
 import java.util.List;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,10 +13,11 @@ import com.komok.common.Tile;
 import com.komok.itemtouchhelper.AbstractRecyclerListAdapter;
 import com.komok.itemtouchhelper.ItemTouchHelperAdapter;
 import com.komok.itemtouchhelper.OnStartDragListener;
+import com.komok.wallpaperchanger.R;
 
-public class LiveWallpaperResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
+public class AppResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
 
-	public LiveWallpaperResultListAdapter(Context context, OnStartDragListener dragStartListener, List<Tile> selectedTilesList) {
+	public AppResultListAdapter(Context context, OnStartDragListener dragStartListener, List<Tile> selectedTilesList) {
 		super(context, dragStartListener, selectedTilesList);
 	}
 
@@ -30,11 +29,8 @@ public class LiveWallpaperResultListAdapter extends AbstractRecyclerListAdapter<
 		mViewOnClickListener = new OnClickListener() {
 			public void onClick(View v) {
 
-				if (tile.mSettingsActivity != null && tile.mIntent != null && tile.mIntent.getPackage() != null) {
-
-					Intent intent = new Intent();
-					intent.setComponent(new ComponentName(tile.mIntent.getPackage(), tile.mSettingsActivity));
-					v.getContext().startActivity(intent);
+				if (tile.mIntent != null) {
+					v.getContext().startActivity(tile.mIntent);
 
 				} else
 

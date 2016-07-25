@@ -1,4 +1,4 @@
-package com.komok.daydreamapprunner;
+package com.komok.daydream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,9 +15,9 @@ import com.komok.common.AbstractEnumerator;
 import com.komok.common.BaseHelper;
 import com.komok.common.Tile;
 
-public class DreamListAdapter extends AbstractBaseAdapter<Tile> {
+public class DayDreamListAdapter extends AbstractBaseAdapter<Tile> {
 
-	public DreamListAdapter(Context context) {
+	public DayDreamListAdapter(Context context) {
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -29,7 +29,7 @@ public class DreamListAdapter extends AbstractBaseAdapter<Tile> {
 		new ComponentEnumerator(context, this).execute(list);
 	}
 
-	private class ComponentEnumerator extends AbstractEnumerator<String, Tile, DreamListAdapter> {
+	private class ComponentEnumerator extends AbstractEnumerator<String, Tile, DayDreamListAdapter> {
 
 		public ComponentEnumerator(Context context, AbstractBaseAdapter<Tile> adapter) {
 			super(context, adapter);

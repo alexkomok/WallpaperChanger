@@ -79,7 +79,7 @@ public class LiveWallpaperListAdapter extends AbstractBaseAdapter<Tile> {
 				launchIntent.setClassName(info.getPackageName(), info.getServiceName());
 				launchIntent.setPackage(info.getPackageName());
 				Tile tile = new Tile(thumb, launchIntent, (String) info.loadLabel(mPackageManager));
-				tile.mLiveWallpaperSettingsActivity = info.getSettingsActivity();
+				tile.mSettingsActivity = info.getSettingsActivity();
 				publishProgress(tile);
 			}
 			// Send a null object to show loading is finished

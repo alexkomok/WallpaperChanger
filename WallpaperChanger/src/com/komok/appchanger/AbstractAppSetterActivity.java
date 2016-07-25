@@ -1,4 +1,4 @@
-package com.komok.apprunner;
+package com.komok.appchanger;
 
 import java.net.URISyntaxException;
 

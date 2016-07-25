@@ -9,7 +9,7 @@ public class Tile {
 	public Drawable mThumbnail;
 	public Intent mIntent;
 	public String mLabel;
-	public String mLiveWallpaperSettingsActivity;
+	public String mSettingsActivity;
 
 	public Tile(Drawable mThumbnail, Intent mIntent, String mLabel) {
 		super();

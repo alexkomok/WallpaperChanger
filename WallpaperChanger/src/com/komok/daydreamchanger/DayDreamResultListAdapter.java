@@ -1,8 +1,10 @@
-package com.komok.apprunner;
+package com.komok.daydreamchanger;
 
 import java.util.List;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,9 +17,9 @@ import com.komok.itemtouchhelper.ItemTouchHelperAdapter;
 import com.komok.itemtouchhelper.OnStartDragListener;
 import com.komok.wallpaperchanger.R;
 
-public class AppResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
+public class DayDreamResultListAdapter extends AbstractRecyclerListAdapter<Tile> implements ItemTouchHelperAdapter {
 
-	public AppResultListAdapter(Context context, OnStartDragListener dragStartListener, List<Tile> selectedTilesList) {
+	public DayDreamResultListAdapter(Context context, OnStartDragListener dragStartListener, List<Tile> selectedTilesList) {
 		super(context, dragStartListener, selectedTilesList);
 	}
 
@@ -29,12 +31,16 @@ public class AppResultListAdapter extends AbstractRecyclerListAdapter<Tile> impl
 		mViewOnClickListener = new OnClickListener() {
 			public void onClick(View v) {
 
-				if (tile.mIntent != null) {
-					v.getContext().startActivity(tile.mIntent);
+				if (tile.mSettingsActivity != null && tile.mIntent != null && tile.mIntent.getPackage() != null) {
+
+					Intent intent = new Intent();
+					intent.setComponent(new ComponentName(tile.mIntent.getPackage(), tile.mSettingsActivity));
+					v.getContext().startActivity(intent);
 
 				} else
 
-					Toast.makeText(v.getContext(), v.getContext().getString(R.string.no_settings), Toast.LENGTH_LONG).show();
+					//Toast.makeText(v.getContext(), v.getContext().getString(R.string.no_settings), Toast.LENGTH_LONG).show();
+					Toast.makeText(v.getContext(),  "activity: " + tile.mSettingsActivity + " Intent: " +tile.mIntent + " package: " + tile.mIntent.getPackage(), Toast.LENGTH_LONG).show();
 			}
 		};
 
