@@ -17,8 +17,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.os.Bundle;
-
 
 public class BaseHelper {
 
@@ -31,7 +29,7 @@ public class BaseHelper {
 	public static final String positionKey = "positionKey";
 	public static final String dreamChoice = "dreamChoice";
 	public static final String splitter = ": ";
-	
+
 	public enum Weekday {
 		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Random, List
 	};
@@ -39,22 +37,24 @@ public class BaseHelper {
 	public enum Apps {
 		All, Sys, User
 	};
-	
-	public enum Components {LiveWallpaper, Application, DayDream};
-	
-	public static String getFormattedComponentName(Components component, Weekday day ){
+
+	public enum Components {
+		LiveWallpaper, Application, DayDream
+	};
+
+	public static String getFormattedComponentName(Components component, Weekday day) {
 		return getFormattedComponentName(component.name(), day.name());
 	}
-	
-	public static String getFormattedComponentName(String component, String day ){
+
+	public static String getFormattedComponentName(String component, String day) {
 		return component + splitter + day;
 	}
-	
-	public static List<String> loadComponentsList(Context context){
+
+	public static List<String> loadComponentsList(Context context) {
 		List<String> results = new ArrayList<String>();
-		
+
 		for (Weekday day : Weekday.values()) {
-			Map<String, String> map = null; 
+			Map<String, String> map = null;
 			for (Components component : Components.values()) {
 				map = null;
 				if (Components.LiveWallpaper.equals(component)) {
@@ -64,8 +64,8 @@ public class BaseHelper {
 				} else if (Components.DayDream.equals(component)) {
 
 				}
-				
-				if(map != null && map.size() > 0)
+
+				if (map != null && map.size() > 0)
 					results.add(getFormattedComponentName(component, day));
 			}
 		}
@@ -99,15 +99,15 @@ public class BaseHelper {
 	public static void saveAppListPosition(int position, Context context) {
 		saveListPosition(position, context, appSettings);
 	}
-	
+
 	public static void saveWallpaperListPosition(int position, Context context) {
 		saveListPosition(position, context, wallpaperSettings);
-	}	
-	
+	}
+
 	public static void saveDreamListPosition(int position, Context context) {
 		saveListPosition(position, context, dreamSettings);
-	}	
-	
+	}
+
 	public static void saveListPosition(int position, Context context, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
@@ -116,7 +116,7 @@ public class BaseHelper {
 			editor.putInt(positionKey, position).commit();
 		}
 	}
-	
+
 	public static void saveDreamChoice(List<String> choice, Context context) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(dreamSettings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
@@ -133,7 +133,7 @@ public class BaseHelper {
 			editor.putString(dreamChoice, jsonArray.toString()).commit();
 		}
 	}
-	
+
 	public static List<String> loadDreamChoice(Context context) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(dreamSettings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
@@ -145,22 +145,23 @@ public class BaseHelper {
 				} catch (JSONException e) {
 					e.printStackTrace();
 					ExceptionHandler.caughtException(e, context);
-				}}
-		} 
-			return new ArrayList<String>();
+				}
+			}
+		}
+		return new ArrayList<String>();
 	}
-	
+
 	public static int loadWallpaperListPosition(Context context) {
 		return loadListPosition(context, wallpaperSettings);
 	}
-	
+
 	public static int loadAppListPosition(Context context) {
 		return loadListPosition(context, appSettings);
 	}
-	
+
 	public static int loadDreamListPosition(Context context) {
 		return loadListPosition(context, dreamSettings);
-	}	
+	}
 
 	public static int loadListPosition(Context context, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
@@ -177,12 +178,11 @@ public class BaseHelper {
 	public static void saveAppsMap(Map<String, String> inputMap, Context context, String randomMap) {
 		saveMap(inputMap, context, randomMap, appSettings);
 	}
-	
 
 	private static void saveMap(Map<String, String> inputMap, Context context, String randomMap, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
 		if (pSharedPref != null) {
-			
+
 			OrderedJSONObject jsonObject = new OrderedJSONObject();
 			try {
 				jsonObject = new OrderedJSONObject(inputMap);
@@ -190,7 +190,6 @@ public class BaseHelper {
 				e.printStackTrace();
 				ExceptionHandler.caughtException(e, context);
 			}
-
 
 			String jsonString = jsonObject.toString();
 			Editor editor = pSharedPref.edit();
@@ -253,27 +252,5 @@ public class BaseHelper {
 			return null;
 		}
 	}
-	
-	
-	public static void getIntentTest(String packageName, PackageManager pm) {
-		Intent intent = new Intent();
-		intent.setPackage(packageName);
-
-		List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER | PackageManager.GET_META_DATA);
-		Collections.sort(resolveInfos, new ResolveInfo.DisplayNameComparator(pm));
-
-		for (ResolveInfo info : resolveInfos) {
-			
-			ActivityInfo aInfo = info.activityInfo;
-            Bundle metadata = aInfo.metaData;
-            Object o = null;
-            if(metadata != null) {
-            	o = metadata.get("android.service.dream");
-            }
-            ResolveInfo launchable = info;
-
-			// activity.getApplication().startActivity(i);
-		} 
-	}	
 
 }

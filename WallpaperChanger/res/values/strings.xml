@@ -30,7 +30,7 @@
 	<string name="select_one">Please, select one</string>
 	<string name="select_one_or_more">Please, select one or more</string>
 	<string name="error_update_list">Some wallpapers are missing. Please, update you list</string>
-	<string name="no_settings">There are no settings for this live wallpaper</string>
+	<string name="no_settings">There are no settings for this %1$s</string>
 	<string name="no_permission">This app has no permission to set wallpaper</string>
 	<string name="wait">Please wait</string>
 	<string name="radio_all">All apps</string>

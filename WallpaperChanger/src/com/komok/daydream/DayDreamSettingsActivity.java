@@ -37,9 +37,7 @@ public class DayDreamSettingsActivity extends Activity implements OnClickListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select);
 		findViewsById();
-		mAdapter = new DayDreamListAdapter(this);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-		listView.setAdapter(mAdapter);
+
 		message = getString(R.string.select_one_or_more);
 		buttonNext.setOnClickListener(this);
 		buttonCreateChanger.setVisibility(View.VISIBLE);
@@ -56,6 +54,10 @@ public class DayDreamSettingsActivity extends Activity implements OnClickListene
 	public void onStart() {
 		super.onStart();
 
+		mAdapter = new DayDreamListAdapter(this);
+		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		listView.setAdapter(mAdapter);
+		
 		selectedList = BaseHelper.loadDreamChoice(this);
 		Bundle b = getIntent().getExtras();
 		error = b == null ? null : b.getString(BaseHelper.ERROR);
@@ -107,10 +109,10 @@ public class DayDreamSettingsActivity extends Activity implements OnClickListene
 
 		BaseHelper.saveDreamChoice(selectedList, this);
 
-		//Intent intent = new Intent(this, DayDreamResultActivity.class);
+		Intent intent = new Intent(this, DayDreamResultActivity.class);
 
 		// start the ResultActivity
-		//startActivity(intent);
+		startActivity(intent);
 	}
 
 	public void setItemChecked() {
