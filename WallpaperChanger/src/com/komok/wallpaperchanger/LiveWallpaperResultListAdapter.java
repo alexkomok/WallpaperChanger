@@ -38,7 +38,7 @@ public class LiveWallpaperResultListAdapter extends AbstractRecyclerListAdapter<
 
 				} else
 
-					Toast.makeText(v.getContext(), String.format(v.getContext().getString(R.string.no_settings),"Live Wallpaper"), Toast.LENGTH_LONG).show();
+					Toast.makeText(v.getContext(), String.format(v.getContext().getString(R.string.no_settings),v.getContext().getString(R.string.wallpaper)), Toast.LENGTH_LONG).show();
 			}
 		};
 

@@ -34,7 +34,7 @@ public class AppResultListAdapter extends AbstractRecyclerListAdapter<Tile> impl
 
 				} else
 
-					Toast.makeText(v.getContext(), String.format(v.getContext().getString(R.string.no_settings),"app"), Toast.LENGTH_LONG).show();
+					Toast.makeText(v.getContext(), String.format(v.getContext().getString(R.string.no_settings),v.getContext().getString(R.string.app)), Toast.LENGTH_LONG).show();
 			}
 		};
 

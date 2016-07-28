@@ -21,7 +21,7 @@ import com.komok.wallpaperchanger.R;
 
 public class DayDreamResultActivity extends Activity implements OnClickListener, OnStartDragListener {
 	String day;
-	Button set_wallpaper;
+	Button set_dream;
 	RecyclerView listView;
 	private ItemTouchHelper mItemTouchHelper;
 
@@ -33,11 +33,11 @@ public class DayDreamResultActivity extends Activity implements OnClickListener,
 		Bundle b = getIntent().getExtras();
 		day = b.getString(BaseHelper.DAY);
 
-		Button mButton = (Button) findViewById(R.id.set_wallpaper);
+		Button mButton = (Button) findViewById(R.id.set_component);
 		if (BaseHelper.Weekday.Random.name().equals(day)) {
-			mButton.setText(getResources().getString(R.string.set_rendom_wallpaper));
+			mButton.setText(String.format(getResources().getString(R.string.set_rendom_component), getResources().getString(R.string.dream)));
 		} else {
-			mButton.setText(getResources().getString(R.string.set_wallpaper));
+			mButton.setText(String.format(getResources().getString(R.string.set_component), getResources().getString(R.string.dream)));
 		}
 
 		mButton.setOnClickListener(this);
@@ -57,15 +57,15 @@ public class DayDreamResultActivity extends Activity implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		
-		Map<String, String> selectedWallpapersMap = new LinkedHashMap<String, String>();
+		Map<String, String> selectedDreamsMap = new LinkedHashMap<String, String>();
 		
 		for(Tile tile : DayDreamSelectionActivity.selectedTilesList){
-			selectedWallpapersMap.put(tile.mLabel, tile.mIntent.toUri(0));
+			selectedDreamsMap.put(tile.mLabel, tile.mIntent.toUri(0));
 		}
 
-		BaseHelper.saveWallpapersMap(selectedWallpapersMap, this, day);
+		BaseHelper.saveDreamsMap(selectedDreamsMap, this, day);
 		
-		if (selectedWallpapersMap.size() == 0) {
+		if (selectedDreamsMap.size() == 0) {
 			Intent intent = new Intent(this, DayDreamSelectionActivity.class);
 
 			// Create a bundle object

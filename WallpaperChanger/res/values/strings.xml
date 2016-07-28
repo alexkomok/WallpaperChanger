@@ -14,10 +14,8 @@
     <string name="submit">Next</string>
 	<string name="select_all">Select All</string>
 	<string name="error_title">Error:</string>
-	<string name="set_rendom_wallpaper">Set rendom Wallpaper from the list</string>
-	<string name="set_rendom_app">Run rendom App from the list</string>
-	<string name="set_wallpaper">Set Wallpaper</string>
-	<string name="set_app">Set App to run</string>
+	<string name="set_rendom_component">Set rendom %1$s from the list</string>
+	<string name="set_component">Set %1$s</string>
 	<string name="list">List</string>
 	<string name="random">Random</string>
 	<string name="monday">Monday</string>
@@ -39,4 +37,7 @@
 	<string name="main_apps">Applications</string>
 	<string name="main_dreams">Day Dreams</string>
 	<string name="main_wallpapers">Live Wallpapers</string>
+	<string name="wallpaper">Live Wallpaper</string>
+	<string name="app">Application</string>
+	<string name="dream">Day Dream</string>
 </resources>

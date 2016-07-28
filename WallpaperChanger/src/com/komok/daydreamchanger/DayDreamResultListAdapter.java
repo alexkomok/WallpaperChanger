@@ -39,7 +39,7 @@ public class DayDreamResultListAdapter extends AbstractRecyclerListAdapter<Tile>
 
 				} else
 
-					Toast.makeText(v.getContext(), String.format(v.getContext().getString(R.string.no_settings),"Day Dream"), Toast.LENGTH_LONG).show();
+					Toast.makeText(v.getContext(), String.format(v.getContext().getString(R.string.no_settings),v.getContext().getString(R.string.dream)), Toast.LENGTH_LONG).show();
 			}
 		};
 

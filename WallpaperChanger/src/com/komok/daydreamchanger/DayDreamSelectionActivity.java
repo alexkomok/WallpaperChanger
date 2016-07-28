@@ -29,7 +29,7 @@ public class DayDreamSelectionActivity extends ListActivity implements OnClickLi
 	CheckBox checkBox;
 	AbstractBaseAdapter<Tile> mAdapter;
 	String day;
-	Map<String, String> selectedWallpapersMap;
+	Map<String, String> selectedDreamsMap;
 	String message;
 	String error;
 	static List<Tile> selectedTilesList;
@@ -54,7 +54,7 @@ public class DayDreamSelectionActivity extends ListActivity implements OnClickLi
 		day = b.getString(BaseHelper.DAY);
 		error = b.getString(BaseHelper.ERROR);
 		checkBox.setChecked(false);
-		selectedWallpapersMap = BaseHelper.loadWallpapersMap(this, day);
+		selectedDreamsMap = BaseHelper.loadDreamsMap(this, day);
 
 		if (BaseHelper.Weekday.Random.name().equals(day) || BaseHelper.Weekday.List.name().equals(day)) {
 			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -80,7 +80,7 @@ public class DayDreamSelectionActivity extends ListActivity implements OnClickLi
 
 		for (int i = 0; i < listView.getAdapter().getCount(); i++) {
 			Tile tile = (Tile) listView.getItemAtPosition(i);
-			if (selectedWallpapersMap.containsKey(tile.mLabel)) {
+			if (selectedDreamsMap.containsKey(tile.mLabel)) {
 				listView.setItemChecked(i, true);
 			} else {
 				listView.setItemChecked(i, false);
@@ -96,7 +96,7 @@ public class DayDreamSelectionActivity extends ListActivity implements OnClickLi
 
 	public void onClick(View v) {
 		SparseBooleanArray checked = listView.getCheckedItemPositions();
-		selectedWallpapersMap = new LinkedHashMap<String, String>();
+		selectedDreamsMap = new LinkedHashMap<String, String>();
 		selectedTilesList = new ArrayList<Tile>();
 
 		boolean isAnyChecked = false;
@@ -108,7 +108,7 @@ public class DayDreamSelectionActivity extends ListActivity implements OnClickLi
 				isAnyChecked = true;
 				Tile tile = (Tile) mAdapter.getItem(position);
 				selectedTilesList.add(tile);
-				selectedWallpapersMap.put(tile.mLabel, tile.mIntent.toUri(0));
+				selectedDreamsMap.put(tile.mLabel, tile.mIntent.toUri(0));
 			}
 		}
 		
@@ -117,7 +117,7 @@ public class DayDreamSelectionActivity extends ListActivity implements OnClickLi
 			return;
 		}
 
-		BaseHelper.saveWallpapersMap(selectedWallpapersMap, this, day);
+		BaseHelper.saveDreamsMap(selectedDreamsMap, this, day);
 
 		Intent intent = new Intent(this, DayDreamResultActivity.class);
 

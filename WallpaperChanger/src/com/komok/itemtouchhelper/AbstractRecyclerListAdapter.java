@@ -72,9 +72,9 @@ public abstract class AbstractRecyclerListAdapter<T> extends RecyclerView.Adapte
         public ItemViewHolder(View itemView) {
             super(itemView);
             holderView = itemView;
-            textView = (TextView) itemView.findViewById(R.id.wallpaper_item_label);
-            imageView = (ImageView) itemView.findViewById(R.id.wallpaper_image);
-            checkBox = (CheckBox) itemView.findViewById(R.id.myCheckBox);
+            textView = (TextView) itemView.findViewById(R.id.tile_label);
+            imageView = (ImageView) itemView.findViewById(R.id.tile_image);
+            checkBox = (CheckBox) itemView.findViewById(R.id.custom_checkbox);
             checkBox.setVisibility(View.GONE);
         }
 

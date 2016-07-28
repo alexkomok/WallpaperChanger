@@ -32,11 +32,11 @@ public class LiveWallpaperResultActivity extends Activity implements OnClickList
 		Bundle b = getIntent().getExtras();
 		day = b.getString(BaseHelper.DAY);
 
-		Button mButton = (Button) findViewById(R.id.set_wallpaper);
+		Button mButton = (Button) findViewById(R.id.set_component);
 		if (BaseHelper.Weekday.Random.name().equals(day)) {
-			mButton.setText(getResources().getString(R.string.set_rendom_wallpaper));
+			mButton.setText(String.format(getResources().getString(R.string.set_rendom_component), getResources().getString(R.string.wallpaper)));
 		} else {
-			mButton.setText(getResources().getString(R.string.set_wallpaper));
+			mButton.setText(String.format(getResources().getString(R.string.set_component), getResources().getString(R.string.wallpaper)));
 		}
 
 		mButton.setOnClickListener(this);

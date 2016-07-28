@@ -20,8 +20,9 @@ import android.content.pm.ResolveInfo;
 
 public class BaseHelper {
 
-	private static final String wallpaperSettings = "wallpaperChangerSettings";
-	private static final String appSettings = "appRunnerSettings";
+	private static final String wallpaperChangerSettings = "wallpaperChangerSettings";
+	private static final String appChangerSettings = "appChangerSettings";
+	private static final String dreamChangerSettings = "dreamChangerSettings";
 	private static final String dreamSettings = "dayDreamSettings";
 	public static final String DAY = "day";
 	public static final String APPS = "apps";
@@ -62,7 +63,7 @@ public class BaseHelper {
 				} else if (Components.Application.equals(component)) {
 					map = loadAppsMap(context, day.name());
 				} else if (Components.DayDream.equals(component)) {
-
+					//map = load(context, day.name());
 				}
 
 				if (map != null && map.size() > 0)
@@ -73,19 +74,18 @@ public class BaseHelper {
 	}
 
 	public static ApplicationHolder loadLiveWallpaper(Context context, Weekday day) {
-		Map<String, String> outputMap = loadWallpapersMap(context, day.name());
-		String className = null;
-		String packageName = null;
-		for (Map.Entry<String, String> entry : outputMap.entrySet()) {
-			className = entry.getKey();
-			packageName = entry.getValue();
-		}
-		return new ApplicationHolder(className, packageName);
-
+		return loadComponent(loadWallpapersMap(context, day.name()));
 	}
 
 	public static ApplicationHolder loadApp(Context context, Weekday day) {
-		Map<String, String> outputMap = loadAppsMap(context, day.name());
+		return loadComponent(loadAppsMap(context, day.name()));
+	}
+	
+	public static ApplicationHolder loadDream(Context context, Weekday day) {
+		return loadComponent(loadDreamsMap(context, day.name()));
+	}
+	
+	private static ApplicationHolder loadComponent(Map<String, String> outputMap){
 		String className = null;
 		String packageName = null;
 		for (Map.Entry<String, String> entry : outputMap.entrySet()) {
@@ -93,19 +93,18 @@ public class BaseHelper {
 			packageName = entry.getValue();
 		}
 		return new ApplicationHolder(className, packageName);
-
 	}
 
 	public static void saveAppListPosition(int position, Context context) {
-		saveListPosition(position, context, appSettings);
+		saveListPosition(position, context, appChangerSettings);
 	}
 
 	public static void saveWallpaperListPosition(int position, Context context) {
-		saveListPosition(position, context, wallpaperSettings);
+		saveListPosition(position, context, wallpaperChangerSettings);
 	}
 
 	public static void saveDreamListPosition(int position, Context context) {
-		saveListPosition(position, context, dreamSettings);
+		saveListPosition(position, context, dreamChangerSettings);
 	}
 
 	public static void saveListPosition(int position, Context context, String settings) {
@@ -152,16 +151,20 @@ public class BaseHelper {
 	}
 
 	public static int loadWallpaperListPosition(Context context) {
-		return loadListPosition(context, wallpaperSettings);
+		return loadListPosition(context, wallpaperChangerSettings);
 	}
 
 	public static int loadAppListPosition(Context context) {
-		return loadListPosition(context, appSettings);
+		return loadListPosition(context, appChangerSettings);
 	}
 
-	public static int loadDreamListPosition(Context context) {
+/*	public static int loadDreamListPosition(Context context) {
 		return loadListPosition(context, dreamSettings);
-	}
+	}*/
+	
+	public static int loadDreamListPosition(Context context) {
+		return loadListPosition(context, dreamChangerSettings);
+	}	
 
 	public static int loadListPosition(Context context, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
@@ -172,12 +175,16 @@ public class BaseHelper {
 	}
 
 	public static void saveWallpapersMap(Map<String, String> inputMap, Context context, String randomMap) {
-		saveMap(inputMap, context, randomMap, wallpaperSettings);
+		saveMap(inputMap, context, randomMap, wallpaperChangerSettings);
 	}
 
 	public static void saveAppsMap(Map<String, String> inputMap, Context context, String randomMap) {
-		saveMap(inputMap, context, randomMap, appSettings);
+		saveMap(inputMap, context, randomMap, appChangerSettings);
 	}
+	
+	public static void saveDreamsMap(Map<String, String> inputMap, Context context, String randomMap) {
+		saveMap(inputMap, context, randomMap, dreamChangerSettings);
+	}	
 
 	private static void saveMap(Map<String, String> inputMap, Context context, String randomMap, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
@@ -200,12 +207,16 @@ public class BaseHelper {
 	}
 
 	public static Map<String, String> loadWallpapersMap(Context context, String mapName) {
-		return loadMap(context, mapName, wallpaperSettings);
+		return loadMap(context, mapName, wallpaperChangerSettings);
 	}
 
 	public static Map<String, String> loadAppsMap(Context context, String mapName) {
-		return loadMap(context, mapName, appSettings);
+		return loadMap(context, mapName, appChangerSettings);
 	}
+	
+	public static Map<String, String> loadDreamsMap(Context context, String mapName) {
+		return loadMap(context, mapName, dreamChangerSettings);
+	}	
 
 	private static Map<String, String> loadMap(Context context, String mapName, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);

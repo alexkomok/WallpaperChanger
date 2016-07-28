@@ -32,8 +32,8 @@ public class DayDreamResultActivity extends Activity implements OnClickListener,
 		setContentView(R.layout.activity_result);
 
 
-		Button mButton = (Button) findViewById(R.id.set_wallpaper);
-		mButton.setText(getResources().getString(R.string.set_app));
+		Button mButton = (Button) findViewById(R.id.set_component);
+		mButton.setText(getResources().getString(R.string.set_component));
 
 		mButton.setOnClickListener(this);
 

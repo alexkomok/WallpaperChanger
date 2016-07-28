@@ -29,12 +29,7 @@ public class DayDreamResultListAdapter extends AbstractRecyclerListAdapter<Tile>
 		mViewOnClickListener = new OnClickListener() {
 			public void onClick(View v) {
 
-				if (tile.mIntent != null) {
-					Toast.makeText(v.getContext(), v.getContext().getString(R.string.no_settings), Toast.LENGTH_LONG).show();
-
-				} else
-
-					Toast.makeText(v.getContext(), String.format(v.getContext().getString(R.string.no_settings),"day dream"), Toast.LENGTH_LONG).show();
+				Toast.makeText(v.getContext(), "TODO...", Toast.LENGTH_LONG).show();
 			}
 		};
 

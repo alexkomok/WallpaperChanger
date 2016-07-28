@@ -42,10 +42,10 @@ public abstract class AbstractBaseAdapter<T extends Tile> extends BaseAdapter im
 		}
 
 		Tile tile = (Tile) mTiles.get(position);
-		ImageView image = (ImageView) view.findViewById(R.id.wallpaper_image);
+		ImageView image = (ImageView) view.findViewById(R.id.tile_image);
 		image.setImageDrawable(tile.mThumbnail);
 
-		TextView label = (TextView) view.findViewById(R.id.wallpaper_item_label);
+		TextView label = (TextView) view.findViewById(R.id.tile_label);
 		label.setText(tile.mLabel);
 
 		return view;

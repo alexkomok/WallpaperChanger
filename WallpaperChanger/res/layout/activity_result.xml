@@ -8,13 +8,12 @@
         android:id="@+id/outputList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/set_wallpaper" />
+        android:layout_above="@+id/set_component" />
 
     <Button
-        android:id="@+id/set_wallpaper"
+        android:id="@+id/set_component"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/set_rendom_wallpaper" />    
+        android:layout_alignParentBottom="true"/>    
     
 </RelativeLayout>

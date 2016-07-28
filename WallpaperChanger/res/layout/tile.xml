@@ -19,9 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/wallpaper_image"
-        android:layout_width="@dimen/wallpaperThumbnailWidth"
-        android:layout_height="@dimen/wallpaperThumbnailHeight"
+        android:id="@+id/tile_image"
+        android:layout_width="@dimen/tile_image_width"
+        android:layout_height="@dimen/tile_image_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="36dip"
@@ -29,12 +29,12 @@
         android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/wallpaper_item_label"
+        android:id="@+id/tile_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_toRightOf="@+id/wallpaper_image"
-        android:background="@color/wallpaper_picker_translucent_gray"
+        android:layout_toRightOf="@+id/tile_image"
+        android:background="@color/translucent_gray"
         android:ellipsize="marquee"
         android:gravity="left"
         android:padding="10dp"
@@ -45,7 +45,7 @@
         android:clickable="false" added.
         CheckableRelativeLayout takes care of the toggle when clicking the row -->
     <CheckBox
-              android:id="@+id/myCheckBox"
+              android:id="@+id/custom_checkbox"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:focusable="false"

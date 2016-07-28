@@ -33,11 +33,11 @@ public class AppResultActivity extends Activity implements OnClickListener, OnSt
 		Bundle b = getIntent().getExtras();
 		day = b.getString(BaseHelper.DAY);
 
-		Button mButton = (Button) findViewById(R.id.set_wallpaper);
+		Button mButton = (Button) findViewById(R.id.set_component);
 		if (BaseHelper.Weekday.Random.name().equals(day)) {
-			mButton.setText(getResources().getString(R.string.set_rendom_app));
+			mButton.setText(String.format(getResources().getString(R.string.set_rendom_component), getResources().getString(R.string.app)));
 		} else {
-			mButton.setText(getResources().getString(R.string.set_app));
+			mButton.setText(String.format(getResources().getString(R.string.set_component), getResources().getString(R.string.app)));
 		}
 
 		mButton.setOnClickListener(this);

@@ -1,15 +1,16 @@
 package com.komok.daydreamchanger;
 
+import com.komok.common.AbstractAppSetterActivity;
 import com.komok.common.ApplicationHolder;
 import com.komok.common.BaseHelper;
 import com.komok.common.BaseHelper.Weekday;
 
 
-public class DayDreamWednesdayActivity extends AbstractDreamSetterActivity {
+public class DayDreamWednesdayActivity extends AbstractAppSetterActivity {
 
 	@Override
 	protected ApplicationHolder getApp() {
-		return  BaseHelper.loadLiveWallpaper(this, getDay());
+		return  BaseHelper.loadDream(this, getDay());
 	}
 
 	@Override

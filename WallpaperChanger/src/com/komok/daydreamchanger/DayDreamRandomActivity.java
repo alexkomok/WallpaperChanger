@@ -5,21 +5,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.komok.common.AbstractAppSetterActivity;
 import com.komok.common.ApplicationHolder;
 import com.komok.common.BaseHelper;
 import com.komok.common.BaseHelper.Weekday;
 
-public class DayDreamRandomActivity extends AbstractDreamSetterActivity {
+public class DayDreamRandomActivity extends AbstractAppSetterActivity {
 
 	@Override
 	protected ApplicationHolder getApp() {
-		Map<String, String> selectedWallpapersMap = BaseHelper.loadWallpapersMap(this, getDay().name());
+		Map<String, String> selectedDreamsMap = BaseHelper.loadDreamsMap(this, getDay().name());
 
-		if (selectedWallpapersMap.size() > 0) {
+		if (selectedDreamsMap.size() > 0) {
 			Random random = new Random();
-			List<String> keys = new ArrayList<String>(selectedWallpapersMap.keySet());
+			List<String> keys = new ArrayList<String>(selectedDreamsMap.keySet());
 			String label = keys.get(random.nextInt(keys.size()));
-			String uri = selectedWallpapersMap.get(label);
+			String uri = selectedDreamsMap.get(label);
 
 			return new ApplicationHolder(label, uri);
 		} else {
