@@ -1,12 +1,11 @@
 package com.komok.daydreamchanger;
 
-import com.komok.common.AbstractAppSetterActivity;
 import com.komok.common.ApplicationHolder;
 import com.komok.common.BaseHelper;
 import com.komok.common.BaseHelper.Weekday;
 
 
-public class DayDreamThursdayActivity extends AbstractAppSetterActivity {
+public class DayDreamThursdayActivity extends AbstractDayDreamSetterActivity {
 
 	@Override
 	protected ApplicationHolder getApp() {

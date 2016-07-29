@@ -1,9 +1,9 @@
 package com.komok.appchanger;
 
-import com.komok.common.AbstractAppSetterActivity;
 import com.komok.common.ApplicationHolder;
 import com.komok.common.BaseHelper;
 import com.komok.common.BaseHelper.Weekday;
+import com.komok.appchanger.AbstractAppSetterActivity;
 
 
 public class AppThursdayActivity extends AbstractAppSetterActivity {

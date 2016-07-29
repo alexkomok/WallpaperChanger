@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.komok.common.AbstractAppSetterActivity;
 import com.komok.common.ApplicationHolder;
 import com.komok.common.BaseHelper;
 import com.komok.common.BaseHelper.Weekday;
 
 
-public class DayDreamListActivity extends AbstractAppSetterActivity {
+public class DayDreamListActivity extends AbstractDayDreamSetterActivity {
 
 	@Override
 	protected ApplicationHolder getApp() {
