@@ -12,7 +12,7 @@ import com.komok.common.BaseHelper.Weekday;
 public class DayDreamRandomActivity extends AbstractDayDreamSetterActivity {
 
 	@Override
-	protected ApplicationHolder getApp() {
+	protected ApplicationHolder getDream() {
 		Map<String, String> selectedDreamsMap = BaseHelper.loadDreamsMap(this, getDay().name());
 
 		if (selectedDreamsMap.size() > 0) {

@@ -13,21 +13,24 @@ import com.komok.common.BaseHelper.Weekday;
 public class DayDreamListActivity extends AbstractDayDreamSetterActivity {
 
 	@Override
-	protected ApplicationHolder getApp() {
+	protected ApplicationHolder getDream() {
 		Map<String, String> selectedDreamssMap = BaseHelper.loadDreamsMap(this, getDay().name());
 		int size = selectedDreamssMap.size();
 		int savedPosition = BaseHelper.loadDreamListPosition(this);
 		
 		if(size > 0){
+			int nextPosition = 0;
 			if(savedPosition < size){
-				int nextPosition = savedPosition + 1 >= size ? 0 : savedPosition + 1;
-				List<String> keys = new ArrayList<String>(selectedDreamssMap.keySet());
-				Collections.reverse(keys);
-				String label = keys.get(savedPosition);
-				String uri = selectedDreamssMap.get(label);
-				BaseHelper.saveDreamListPosition(nextPosition, this);
-				return new ApplicationHolder(label, uri);
+				nextPosition = savedPosition + 1 >= size ? 0 : savedPosition + 1;
+			} else {
+				savedPosition = size - 1;
 			}
+			List<String> keys = new ArrayList<String>(selectedDreamssMap.keySet());
+			Collections.reverse(keys);
+			String label = keys.get(savedPosition);
+			String uri = selectedDreamssMap.get(label);
+			BaseHelper.saveDreamListPosition(nextPosition, this);
+			return new ApplicationHolder(label, uri);
 			
 		} 
 		return null;

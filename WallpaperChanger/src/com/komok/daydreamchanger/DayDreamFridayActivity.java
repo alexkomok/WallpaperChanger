@@ -8,7 +8,7 @@ import com.komok.common.BaseHelper.Weekday;
 public class DayDreamFridayActivity extends AbstractDayDreamSetterActivity {
 
 	@Override
-	protected ApplicationHolder getApp() {
+	protected ApplicationHolder getDream() {
 		return  BaseHelper.loadDream(this, getDay());
 	}
 

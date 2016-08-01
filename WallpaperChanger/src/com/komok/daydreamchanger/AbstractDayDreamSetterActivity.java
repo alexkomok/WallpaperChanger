@@ -3,7 +3,6 @@ package com.komok.daydreamchanger;
 import java.net.URISyntaxException;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -13,24 +12,25 @@ import android.util.Log;
 import com.komok.common.ApplicationHolder;
 import com.komok.common.BaseHelper;
 import com.komok.common.ExceptionHandler;
+import com.komok.daydream.DayDreamService;
 import com.komok.wallpaperchanger.R;
 
 abstract public class AbstractDayDreamSetterActivity extends Activity {
 
 	private static final String TAG = "AbstractAppSetterActivity";
 
-	protected abstract ApplicationHolder getApp();
+	protected abstract ApplicationHolder getDream();
 
 	protected abstract BaseHelper.Weekday getDay();
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
-		final Context mContext = getApplicationContext();
-		
+
+		final Context mContext = this;
+
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-		ApplicationHolder app = getApp();
+		ApplicationHolder app = getDream();
 
 		if (app == null) {
 			ExceptionHandler.caughtException(new Exception(getString(R.string.error_update_list) + " for: " + getDay().name()), this);
@@ -52,20 +52,19 @@ abstract public class AbstractDayDreamSetterActivity extends Activity {
 
 		// Somnabulator is undocumented--may be removed in a future version...
 		intent.setClassName("com.android.systemui", "com.android.systemui.Somnambulator");
+
 		startActivity(intent);
-		
+
 		Handler mHandler = new Handler();
 		mHandler.postDelayed(new Runnable() {
 
 			@Override
 			public void run() {
-				Settings.Secure.putString(mContext.getContentResolver(), "screensaver_components", new ComponentName(getApplication().getApplicationInfo().packageName, "om.komok.wallpaperchanger/com.komok.daydream.DayDreamService").flattenToString());
+				Settings.Secure.putString(mContext.getContentResolver(), "screensaver_components", mContext.getApplicationInfo().packageName + "/"
+						+ DayDreamService.class.getName());
 			}
 
-		}, 200L);
-		
-		
+		}, 300L);
 
 	}
-
 }
