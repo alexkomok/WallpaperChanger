@@ -22,7 +22,7 @@ import com.komok.wallpaperchanger.R;
 
 public class DayDreamResultActivity extends Activity implements OnClickListener, OnStartDragListener {
 	String day;
-	Button set_wallpaper;
+	Button set_dream;
 	RecyclerView listView;
 	private ItemTouchHelper mItemTouchHelper;
 
@@ -33,7 +33,7 @@ public class DayDreamResultActivity extends Activity implements OnClickListener,
 
 
 		Button mButton = (Button) findViewById(R.id.set_component);
-		mButton.setText(getResources().getString(R.string.set_component));
+		mButton.setText(getResources().getString(R.string.settings_save));
 
 		mButton.setOnClickListener(this);
 
@@ -77,7 +77,7 @@ public class DayDreamResultActivity extends Activity implements OnClickListener,
 			startActivity(intent);
 			finish();
 		} else {
-			Toast.makeText(this, "Start daydream", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.settings_saved), Toast.LENGTH_LONG).show();
 		}
 
 	}

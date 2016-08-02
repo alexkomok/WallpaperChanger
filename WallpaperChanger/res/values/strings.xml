@@ -29,7 +29,7 @@
 	<string name="select_one_or_more">Please, select one or more</string>
 	<string name="error_update_list">Some wallpapers are missing. Please, update you list</string>
 	<string name="no_settings">There are no settings for this %1$s</string>
-	<string name="no_permission">This app has no permission to set wallpaper</string>
+	<string name="no_permission">There is no permission to run. @string/app_name must be installed as a System App!</string>
 	<string name="wait">Please wait</string>
 	<string name="radio_all">All apps</string>
 	<string name="radio_sys">System apps</string>
@@ -40,4 +40,6 @@
 	<string name="wallpaper">Live Wallpaper</string>
 	<string name="app">Application</string>
 	<string name="dream">Day Dream</string>
+	<string name="settings_save">Save your settings</string>
+	<string name="settings_saved">Your settings have been saved</string>
 </resources>

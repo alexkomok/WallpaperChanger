@@ -63,7 +63,7 @@ public class BaseHelper {
 				} else if (Components.Application.equals(component)) {
 					map = loadAppsMap(context, day.name());
 				} else if (Components.DayDream.equals(component)) {
-					//map = load(context, day.name());
+					map = loadDreamsMap(context, day.name());
 				}
 
 				if (map != null && map.size() > 0)
