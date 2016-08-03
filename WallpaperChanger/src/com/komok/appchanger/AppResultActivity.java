@@ -87,25 +87,7 @@ public class AppResultActivity extends Activity implements OnClickListener, OnSt
 			finish();
 		} else {
 
-			if (BaseHelper.Weekday.Random.name().equals(day)) {
-				startActivity(new Intent(this, AppRandomActivity.class));
-			} else if (BaseHelper.Weekday.Monday.name().equals(day)) {
-				startActivity(new Intent(this, AppMondayActivity.class));
-			} else if (BaseHelper.Weekday.Tuesday.name().equals(day)) {
-				startActivity(new Intent(this, AppTuesdayActivity.class));
-			} else if (BaseHelper.Weekday.Wednesday.name().equals(day)) {
-				startActivity(new Intent(this, AppWednesdayActivity.class));
-			} else if (BaseHelper.Weekday.Thursday.name().equals(day)) {
-				startActivity(new Intent(this, AppThursdayActivity.class));
-			} else if (BaseHelper.Weekday.Friday.name().equals(day)) {
-				startActivity(new Intent(this, AppFridayActivity.class));
-			} else if (BaseHelper.Weekday.Saturday.name().equals(day)) {
-				startActivity(new Intent(this, AppSaturdayActivity.class));
-			} else if (BaseHelper.Weekday.Sunday.name().equals(day)) {
-				startActivity(new Intent(this, AppSundayActivity.class));
-			} else if (BaseHelper.Weekday.List.name().equals(day)) {
-				startActivity(new Intent(this, AppListActivity.class));
-			}
+			BaseHelper.runDayActivity(BaseHelper.Components.Application, day, this);
 		}
 
 	}

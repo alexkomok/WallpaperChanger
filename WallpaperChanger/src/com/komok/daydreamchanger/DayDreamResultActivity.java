@@ -44,27 +44,27 @@ public class DayDreamResultActivity extends Activity implements OnClickListener,
 
 		listView = (RecyclerView) findViewById(R.id.outputList);
 		DayDreamResultListAdapter adapter = new DayDreamResultListAdapter(this, this, DayDreamSelectionActivity.selectedTilesList);
-		
+
 		listView.setHasFixedSize(true);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
-		
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(listView);
+
+		ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+		mItemTouchHelper = new ItemTouchHelper(callback);
+		mItemTouchHelper.attachToRecyclerView(listView);
 	}
 
 	@Override
 	public void onClick(View v) {
-		
+
 		Map<String, String> selectedDreamsMap = new LinkedHashMap<String, String>();
-		
-		for(Tile tile : DayDreamSelectionActivity.selectedTilesList){
+
+		for (Tile tile : DayDreamSelectionActivity.selectedTilesList) {
 			selectedDreamsMap.put(tile.mLabel, tile.mIntent.toUri(0));
 		}
 
 		BaseHelper.saveDreamsMap(selectedDreamsMap, this, day);
-		
+
 		if (selectedDreamsMap.size() == 0) {
 			Intent intent = new Intent(this, DayDreamSelectionActivity.class);
 
@@ -86,32 +86,14 @@ public class DayDreamResultActivity extends Activity implements OnClickListener,
 			startActivity(intent);
 			finish();
 		} else {
-
-			if (BaseHelper.Weekday.Random.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamRandomActivity.class));
-			} else if (BaseHelper.Weekday.Monday.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamMondayActivity.class));
-			} else if (BaseHelper.Weekday.Tuesday.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamTuesdayActivity.class));
-			} else if (BaseHelper.Weekday.Wednesday.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamWednesdayActivity.class));
-			} else if (BaseHelper.Weekday.Thursday.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamThursdayActivity.class));
-			} else if (BaseHelper.Weekday.Friday.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamFridayActivity.class));
-			} else if (BaseHelper.Weekday.Saturday.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamSaturdayActivity.class));
-			} else if (BaseHelper.Weekday.Sunday.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamSundayActivity.class));
-			} else if (BaseHelper.Weekday.List.name().equals(day)) {
-				startActivity(new Intent(this, DayDreamListActivity.class));
-			}}
+			BaseHelper.runDayActivity(BaseHelper.Components.DayDream, day, this);
+		}
 
 	}
 
-    @Override
-    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        mItemTouchHelper.startDrag(viewHolder);
-    }
+	@Override
+	public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+		mItemTouchHelper.startDrag(viewHolder);
+	}
 
 }

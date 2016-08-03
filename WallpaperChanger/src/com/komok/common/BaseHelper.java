@@ -18,6 +18,34 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
+import com.komok.appchanger.AppFridayActivity;
+import com.komok.appchanger.AppListActivity;
+import com.komok.appchanger.AppMondayActivity;
+import com.komok.appchanger.AppRandomActivity;
+import com.komok.appchanger.AppSaturdayActivity;
+import com.komok.appchanger.AppSundayActivity;
+import com.komok.appchanger.AppThursdayActivity;
+import com.komok.appchanger.AppTuesdayActivity;
+import com.komok.appchanger.AppWednesdayActivity;
+import com.komok.daydreamchanger.DayDreamFridayActivity;
+import com.komok.daydreamchanger.DayDreamListActivity;
+import com.komok.daydreamchanger.DayDreamMondayActivity;
+import com.komok.daydreamchanger.DayDreamRandomActivity;
+import com.komok.daydreamchanger.DayDreamSaturdayActivity;
+import com.komok.daydreamchanger.DayDreamSundayActivity;
+import com.komok.daydreamchanger.DayDreamThursdayActivity;
+import com.komok.daydreamchanger.DayDreamTuesdayActivity;
+import com.komok.daydreamchanger.DayDreamWednesdayActivity;
+import com.komok.wallpaperchanger.LiveWallpaperFridayActivity;
+import com.komok.wallpaperchanger.LiveWallpaperListActivity;
+import com.komok.wallpaperchanger.LiveWallpaperMondayActivity;
+import com.komok.wallpaperchanger.LiveWallpaperRandomActivity;
+import com.komok.wallpaperchanger.LiveWallpaperSaturdayActivity;
+import com.komok.wallpaperchanger.LiveWallpaperSundayActivity;
+import com.komok.wallpaperchanger.LiveWallpaperThursdayActivity;
+import com.komok.wallpaperchanger.LiveWallpaperTuesdayActivity;
+import com.komok.wallpaperchanger.LiveWallpaperWednesdayActivity;
+
 public class BaseHelper {
 
 	private static final String wallpaperChangerSettings = "wallpaperChangerSettings";
@@ -80,12 +108,12 @@ public class BaseHelper {
 	public static ApplicationHolder loadApp(Context context, Weekday day) {
 		return loadComponent(loadAppsMap(context, day.name()));
 	}
-	
+
 	public static ApplicationHolder loadDream(Context context, Weekday day) {
 		return loadComponent(loadDreamsMap(context, day.name()));
 	}
-	
-	private static ApplicationHolder loadComponent(Map<String, String> outputMap){
+
+	private static ApplicationHolder loadComponent(Map<String, String> outputMap) {
 		String className = null;
 		String packageName = null;
 		for (Map.Entry<String, String> entry : outputMap.entrySet()) {
@@ -105,6 +133,10 @@ public class BaseHelper {
 
 	public static void saveDreamListPosition(int position, Context context) {
 		saveListPosition(position, context, dreamChangerSettings);
+	}
+
+	public static void saveComponentListPosition(int position, Context context) {
+		saveListPosition(position, context, dreamSettings);
 	}
 
 	public static void saveListPosition(int position, Context context, String settings) {
@@ -158,13 +190,13 @@ public class BaseHelper {
 		return loadListPosition(context, appChangerSettings);
 	}
 
-/*	public static int loadDreamListPosition(Context context) {
-		return loadListPosition(context, dreamSettings);
-	}*/
-	
 	public static int loadDreamListPosition(Context context) {
 		return loadListPosition(context, dreamChangerSettings);
-	}	
+	}
+
+	public static int loadComponentListPosition(Context context) {
+		return loadListPosition(context, dreamSettings);
+	}
 
 	public static int loadListPosition(Context context, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
@@ -181,10 +213,10 @@ public class BaseHelper {
 	public static void saveAppsMap(Map<String, String> inputMap, Context context, String randomMap) {
 		saveMap(inputMap, context, randomMap, appChangerSettings);
 	}
-	
+
 	public static void saveDreamsMap(Map<String, String> inputMap, Context context, String randomMap) {
 		saveMap(inputMap, context, randomMap, dreamChangerSettings);
-	}	
+	}
 
 	private static void saveMap(Map<String, String> inputMap, Context context, String randomMap, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
@@ -213,10 +245,10 @@ public class BaseHelper {
 	public static Map<String, String> loadAppsMap(Context context, String mapName) {
 		return loadMap(context, mapName, appChangerSettings);
 	}
-	
+
 	public static Map<String, String> loadDreamsMap(Context context, String mapName) {
 		return loadMap(context, mapName, dreamChangerSettings);
-	}	
+	}
 
 	private static Map<String, String> loadMap(Context context, String mapName, String settings) {
 		SharedPreferences pSharedPref = context.getSharedPreferences(settings, Context.MODE_PRIVATE);
@@ -262,6 +294,84 @@ public class BaseHelper {
 		} else {
 			return null;
 		}
+	}
+
+	public static void runDayActivity(Components component, String day, Context context) {
+
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+		if (BaseHelper.Components.Application.equals(component)) {
+
+			if (BaseHelper.Weekday.Random.name().equals(day)) {
+				intent.setClass(context, AppRandomActivity.class);
+			} else if (BaseHelper.Weekday.Monday.name().equals(day)) {
+				intent.setClass(context, AppMondayActivity.class);
+			} else if (BaseHelper.Weekday.Tuesday.name().equals(day)) {
+				intent.setClass(context, AppTuesdayActivity.class);
+			} else if (BaseHelper.Weekday.Wednesday.name().equals(day)) {
+				intent.setClass(context, AppWednesdayActivity.class);
+			} else if (BaseHelper.Weekday.Thursday.name().equals(day)) {
+				intent.setClass(context, AppThursdayActivity.class);
+			} else if (BaseHelper.Weekday.Friday.name().equals(day)) {
+				intent.setClass(context, AppFridayActivity.class);
+			} else if (BaseHelper.Weekday.Saturday.name().equals(day)) {
+				intent.setClass(context, AppSaturdayActivity.class);
+			} else if (BaseHelper.Weekday.Sunday.name().equals(day)) {
+				intent.setClass(context, AppSundayActivity.class);
+			} else if (BaseHelper.Weekday.List.name().equals(day)) {
+
+				intent.setClass(context, AppListActivity.class);
+
+			}
+
+		} else if (BaseHelper.Components.DayDream.equals(component)) {
+
+			if (BaseHelper.Weekday.Random.name().equals(day)) {
+				intent.setClass(context, DayDreamRandomActivity.class);
+			} else if (BaseHelper.Weekday.Monday.name().equals(day)) {
+				intent.setClass(context, DayDreamMondayActivity.class);
+			} else if (BaseHelper.Weekday.Tuesday.name().equals(day)) {
+				intent.setClass(context, DayDreamTuesdayActivity.class);
+			} else if (BaseHelper.Weekday.Wednesday.name().equals(day)) {
+				intent.setClass(context, DayDreamWednesdayActivity.class);
+			} else if (BaseHelper.Weekday.Thursday.name().equals(day)) {
+				intent.setClass(context, DayDreamThursdayActivity.class);
+			} else if (BaseHelper.Weekday.Friday.name().equals(day)) {
+				intent.setClass(context, DayDreamFridayActivity.class);
+			} else if (BaseHelper.Weekday.Saturday.name().equals(day)) {
+				intent.setClass(context, DayDreamSaturdayActivity.class);
+			} else if (BaseHelper.Weekday.Sunday.name().equals(day)) {
+				intent.setClass(context, DayDreamSundayActivity.class);
+			} else if (BaseHelper.Weekday.List.name().equals(day)) {
+				intent.setClass(context, DayDreamListActivity.class);
+			}
+
+		}
+		if (BaseHelper.Components.LiveWallpaper.equals(component)) {
+			if (BaseHelper.Weekday.Random.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperRandomActivity.class);
+			} else if (BaseHelper.Weekday.Monday.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperMondayActivity.class);
+			} else if (BaseHelper.Weekday.Tuesday.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperTuesdayActivity.class);
+			} else if (BaseHelper.Weekday.Wednesday.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperWednesdayActivity.class);
+			} else if (BaseHelper.Weekday.Thursday.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperThursdayActivity.class);
+			} else if (BaseHelper.Weekday.Friday.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperFridayActivity.class);
+			} else if (BaseHelper.Weekday.Saturday.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperSaturdayActivity.class);
+			} else if (BaseHelper.Weekday.Sunday.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperSundayActivity.class);
+			} else if (BaseHelper.Weekday.List.name().equals(day)) {
+				intent.setClass(context, LiveWallpaperListActivity.class);
+			}
+		}
+
+		context.startActivity(intent);
 	}
 
 }
