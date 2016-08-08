@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -16,12 +15,13 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.komok.common.BaseListActivity;
 import com.komok.common.AbstractBaseAdapter;
 import com.komok.common.BaseHelper;
 import com.komok.common.IItemChecked;
 import com.komok.common.Tile;
 
-public class LiveWallpaperSelectionActivity extends ListActivity implements OnClickListener, IItemChecked {
+public class LiveWallpaperSelectionActivity extends BaseListActivity implements OnClickListener, IItemChecked {
 
 	Button button;
 	ListView listView;

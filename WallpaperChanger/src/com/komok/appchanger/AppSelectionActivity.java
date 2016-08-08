@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -18,12 +17,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.komok.common.BaseListActivity;
 import com.komok.common.BaseHelper;
 import com.komok.common.IItemChecked;
 import com.komok.common.Tile;
 import com.komok.wallpaperchanger.R;
 
-public class AppSelectionActivity extends ListActivity implements OnClickListener, IItemChecked {
+public class AppSelectionActivity extends BaseListActivity implements OnClickListener, IItemChecked {
 
 	Button button;
 	ListView listView;

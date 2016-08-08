@@ -3,7 +3,6 @@ package com.komok.daydream;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,13 +13,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.komok.common.BaseActivity;
 import com.komok.common.BaseHelper;
 import com.komok.common.Tile;
 import com.komok.itemtouchhelper.OnStartDragListener;
 import com.komok.itemtouchhelper.SimpleItemTouchHelperCallback;
 import com.komok.wallpaperchanger.R;
 
-public class DayDreamResultActivity extends Activity implements OnClickListener, OnStartDragListener {
+public class DayDreamResultActivity extends BaseActivity implements OnClickListener, OnStartDragListener {
 	String day;
 	Button set_dream;
 	RecyclerView listView;

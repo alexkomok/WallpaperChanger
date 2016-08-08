@@ -1,6 +1,5 @@
 package com.komok.common;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +9,7 @@ import android.widget.Button;
 
 import com.komok.wallpaperchanger.R;
 
-public abstract class AbstractChangerActivity<T extends ListActivity> extends Activity implements OnClickListener{
+public abstract class AbstractChangerActivity<T extends ListActivity> extends BaseActivity implements OnClickListener{
 	
 	Button random_button;
 	Button list_button;

@@ -41,11 +41,11 @@
         </activity>
         <activity
             android:name="com.komok.wallpaperchanger.LiveWallpaperResultActivity"
-            android:label="@string/result_activity" >
+            android:label="@string/result_wallpaper_activity" >
         </activity>
         <activity
             android:name="com.komok.wallpaperchanger.LiveWallpaperSelectionActivity"
-            android:label="@string/selection_activity" >
+            android:label="@string/selection_wallpaper_activity" >
         </activity>
 
         <activity
@@ -134,15 +134,15 @@
 
         <activity
             android:name="com.komok.appchanger.AppChangerActivity"
-            android:label="@string/main_activity">
+            android:label="@string/changer_activity">
         </activity>
         <activity
             android:name="com.komok.appchanger.AppResultActivity"
-            android:label="@string/result_activity" >
+            android:label="@string/result_app_activity" >
         </activity>
         <activity
             android:name="com.komok.appchanger.AppSelectionActivity"
-            android:label="@string/result_activity" >
+            android:label="@string/result_app_activity" >
         </activity>
         
         <activity
@@ -231,15 +231,15 @@
         
         <activity
             android:name="com.komok.daydreamchanger.DayDreamChangerActivity"
-            android:label="@string/main_activity">
+            android:label="@string/changer_activity">
         </activity>
         <activity
             android:name="com.komok.daydreamchanger.DayDreamResultActivity"
-            android:label="@string/result_activity" >
+            android:label="@string/result_dream_activity" >
         </activity>
         <activity
             android:name="com.komok.daydreamchanger.DayDreamSelectionActivity"
-            android:label="@string/result_activity" >
+            android:label="@string/result_dream_activity" >
         </activity>
         
         <activity
@@ -259,7 +259,69 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>         
-        
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamMondayActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamTuesdayActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamWednesdayActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamThursdayActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamFridayActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamSaturdayActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.komok.daydreamchanger.DayDreamSundayActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
         
         
         
@@ -286,7 +348,7 @@
             android:name="com.komok.daydream.DayDreamService"
             android:exported="true"
             android:permission="android.permission.BIND_DREAM_SERVICE"
-            android:label="Application Runner" >
+            android:label="@string/app_name" >
             <meta-data
                 android:name="android.service.dream"
                 android:resource="@xml/settings_dream" />

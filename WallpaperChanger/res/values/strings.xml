@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Wallpaper Changer</string> 
+    <string name="app_name">Dream Application Runner</string> 
    	<string name="main_activity">Create Changer for:</string>
 
-   	<string name="changer_activity">Selected Wallpapers</string>
-   	<string name="selection_activity">Select Wallpapers</string>
-    <string name="result_activity">Selected Wallpapers</string>
+   	<string name="changer_activity">Selecte type of Changer</string>
+   	
+   	<string name="selection_wallpaper_activity">Select Wallpaper</string>
+    <string name="result_wallpaper_activity">Selected Wallpapers</string>
+    
+    <string name="selection_app_activity">Select Application</string>
+    <string name="result_app_activity">Selected Wallpapers</string>
+    
+   	<string name="selection_dream_activity">Select Day Dream</string>
+    <string name="result_dream_activity">Selected Day Dreams</string>    
+    
     <string name="error_activity">Error</string>
     
     <string name="create">Create Changer</string>
@@ -29,7 +37,7 @@
 	<string name="select_one_or_more">Please, select one or more</string>
 	<string name="error_update_list">Some wallpapers are missing. Please, update you list</string>
 	<string name="no_settings">There are no settings for this %1$s</string>
-	<string name="no_permission">There is no permission to run. @string/app_name must be installed as a System App!</string>
+	<string name="no_permission">There is no permission to run. This application must be installed as a System App!</string>
 	<string name="wait">Please wait</string>
 	<string name="radio_all">All apps</string>
 	<string name="radio_sys">System apps</string>
@@ -42,4 +50,5 @@
 	<string name="dream">Day Dream</string>
 	<string name="settings_save">Save your settings</string>
 	<string name="settings_saved">Your settings have been saved</string>
+	<string name="settings">Settings</string>
 </resources>

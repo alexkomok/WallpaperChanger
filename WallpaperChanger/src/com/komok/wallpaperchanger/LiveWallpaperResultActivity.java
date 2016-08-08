@@ -3,7 +3,6 @@ package com.komok.wallpaperchanger;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,12 +12,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.komok.common.BaseActivity;
 import com.komok.common.BaseHelper;
 import com.komok.common.Tile;
 import com.komok.itemtouchhelper.OnStartDragListener;
 import com.komok.itemtouchhelper.SimpleItemTouchHelperCallback;
 
-public class LiveWallpaperResultActivity extends Activity implements OnClickListener, OnStartDragListener {
+public class LiveWallpaperResultActivity extends BaseActivity implements OnClickListener, OnStartDragListener {
 	String day;
 	Button set_wallpaper;
 	RecyclerView listView;

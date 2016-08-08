@@ -3,7 +3,6 @@ package com.komok.daydream;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -14,16 +13,16 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.komok.common.BaseListActivity;
 import com.komok.common.BaseHelper;
 import com.komok.common.IItemChecked;
 import com.komok.common.MainActivity;
 import com.komok.common.Tile;
 import com.komok.wallpaperchanger.R;
 
-public class DayDreamSettingsActivity extends Activity implements OnClickListener, IItemChecked {
+public class DayDreamSettingsActivity extends BaseListActivity implements OnClickListener, IItemChecked {
 
 	Button buttonNext;
-	Button buttonCreateChanger;
 	ListView listView;
 	CheckBox checkBox;
 	DayDreamListAdapter mAdapter;
@@ -40,15 +39,6 @@ public class DayDreamSettingsActivity extends Activity implements OnClickListene
 
 		message = getString(R.string.select_one_or_more);
 		buttonNext.setOnClickListener(this);
-		buttonCreateChanger.setVisibility(View.VISIBLE);
-		buttonCreateChanger.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-				// start the ResultActivity
-				startActivity(intent);
-			}
-		});
 	}
 
 	public void onStart() {
@@ -57,7 +47,7 @@ public class DayDreamSettingsActivity extends Activity implements OnClickListene
 		mAdapter = new DayDreamListAdapter(this);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setAdapter(mAdapter);
-		
+
 		selectedList = BaseHelper.loadDreamChoice(this);
 		Bundle b = getIntent().getExtras();
 		error = b == null ? null : b.getString(BaseHelper.ERROR);
@@ -74,7 +64,6 @@ public class DayDreamSettingsActivity extends Activity implements OnClickListene
 		listView = (ListView) findViewById(android.R.id.list);
 		buttonNext = (Button) findViewById(R.id.button_next);
 		checkBox = (CheckBox) findViewById(R.id.select_all);
-		buttonCreateChanger = (Button) findViewById(R.id.button_select_type);
 
 	}
 
